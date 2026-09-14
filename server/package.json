@@ -11,7 +11,13 @@
     "start": "node dist/src/index.js",
     "migrate": "prisma migrate deploy"
   },
-  "keywords": ["lunara", "journal", "diary", "emotional", "psychology"],
+  "keywords": [
+    "lunara",
+    "journal",
+    "diary",
+    "emotional",
+    "psychology"
+  ],
   "author": "Lunara Team",
   "license": "ISC",
   "type": "module",
@@ -19,6 +25,7 @@
     "@paralleldrive/cuid2": "^2.2.2",
     "@prisma/client": "^6.11.1",
     "@prisma/extension-accelerate": "^2.0.1",
+    "bcryptjs": "^3.0.3",
     "cloudinary": "^2.7.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
@@ -29,13 +36,14 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
-    "@types/cookie-parser": "^1.4.9",
+    "@types/cookie-parser": "^1.4.10",
     "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.3",
+    "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/multer": "^1.4.13",
-    "bcryptjs": "^3.0.2",
+    "@types/node": "^26.5.1",
     "prisma": "^6.11.1",
-    "ts-node-dev": "^2.0.0"
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.9.3"
   }
 }
