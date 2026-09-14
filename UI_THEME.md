@@ -219,11 +219,38 @@ Lunara should feel like opening a private diary at night under soft moonlight. T
 ## 5b. Background Design
 
 ### Workspace Background
-- Main workspace: moon-paper texture with extremely faint star/noise pattern at opacity 0.02–0.04
-- Optional top radial glow simulating moonlight — `radial-gradient(ellipse at 50% 0%, rgba(216, 227, 240, 0.08) 0%, transparent 70%)`
+- Right workspace uses `.lunara-celestial-workspace` with a full-bleed image layer behind all tab content.
+- `.lunara-celestial-workspace` is the positioning context for the whole right pane: `position: relative`, `min-height: 100vh`, `width: 100%`, `min-width: 0`, and `overflow: hidden`.
+- `LunaraCelestialBackground` must be mounted directly inside the right workspace, never inside the `max-width` / `mx-auto` tab content wrapper.
+- Primary background asset should be `public/assets/lunara-moon-bg.webp`; fallback is `public/assets/lunara-moon-bg.jpg`, then the old low-resolution `public/assets/lunar lumina.jpg`.
+- Recommended background resolution is 1920x1080 minimum, with 2560x1440 preferred.
+- The old `lunar lumina.jpg` asset is fallback only because it is 639x360 and must not be stretched into a large wallpaper.
+- High-quality moon artwork such as `lunara-moon-bg.webp` / `lunara-moon-bg.jpg` fills the right workspace with `object-fit: cover`.
+- Use `object-fit: contain` only for the old low-resolution fallback if needed, so it does not become a visibly stretched wallpaper.
+- Do not cap the high-quality image wrapper to the source dimensions; the image layer must be `position: absolute; inset: 0` and fill the workspace.
+- The background image, overlays, and falling-star layer all span the full right pane with absolute full-inset sizing.
+- Avoid visible image rectangles, letterboxing, centered poster blocks, or empty margins around the background.
+- The image is scoped only to the right workspace; the left rail remains a separate deep navy navigation surface and must not receive this background.
+- Use deep navy vignettes and dark radial overlays for readability; avoid heavy cream fog that washes out the artwork.
+- Use dark overlay/vignette for readability instead of cream haze, and do not blur or heavily fade the main image.
+- Do not use watermarked, copyrighted stock-watermarked, text-embedded, or protected stock images for the workspace background.
+- Bare headings and subtitles over the image use Pearl Mist / Lunara Silver with subtle navy text shadow. Text inside moon-paper cards remains Ink Blue.
+- The old fake `.lunara-moon-watermark` circle is disabled so it does not compete with the image moon. Any moon enhancement must be a subtle overlay glow only.
+- Falling stars live only behind right workspace content through `.lunara-falling-stars` and `.lunara-falling-star`; they are lightweight CSS streaks adapted from the Uiverse falling-star idea.
+- Falling stars are layered above the moon image/readability overlays and below all actual tab content, cards, forms, diary books, dialogs, and dropdowns.
+- Tab content uses a relative z-index above the background system; ambient controls sit above content, and dialogs remain highest.
+- Desktop uses 45-70 deterministic star streaks distributed across the full right workspace. Tablet keeps 28-40, and mobile keeps 16-24.
+- Star starts vary from the top edge through the visible workspace so motion does not cluster only near the moon.
+- Do not use the Uiverse card, button, wobble text, hover moon, galaxy button, body-level `:has()` effects, or other unrelated design pieces.
+- Right workspace cards use reusable glass-moonpaper surfaces so the moon image remains visible while text stays readable.
+- Use `.lunara-glass-card` for profile/stat tiles, `.lunara-panel-card` for larger settings/search/dialog panels, `.lunara-diary-card` for diary list items, `.lunara-field` for small ID/input display boxes, and `.lunara-page-heading-on-bg` / `.lunara-subtitle-on-bg` for text placed directly over the moon image.
+- Diary list cards must feel like private moonlit diary covers or journal slips. They should use a responsive grid and must not stretch into full-width cream slabs when only one diary exists.
+- Headings over the moon image need Pearl Mist contrast and a subtle navy text shadow; subtitles use readable Lunara Silver / Muted Stardust opacity.
+- Diary writing pages stay clean moon-paper surfaces with no background animation inside the writing body.
+- Ambient audio is optional, local-only, and manual-play only through `/audio/lunara-lofi.mp3`; the file must be user-provided or royalty-free.
 - No full-screen galaxy wallpaper
-- No animated starfield
-- No particles
+- No galaxy poster, neon, external audio stream, canvas, video background, or heavy particle system
+- Reduced-motion users keep the static moon atmosphere while falling-star movement is disabled and stars remain faint.
 
 ### Left Rail Background
 - Deep Lunara Night gradient: `linear-gradient(180deg, #0B1020 0%, #0D1321 100%)`
@@ -536,10 +563,56 @@ The core writing experience. An open-book visual with left and right pages.
 - **`.diary-book`** — flex container, max-width 1100px, centered
 - **`.diary-book-stack`** — layered page edges behind main pages (z-index: 0), silver-blue tone
 - **`.diary-spread`** — two pages side by side (z-index: 1)
-- **`.diary-page-left`** — left page, `rotateY(1.5deg)`, shows previous page content faded, faint moon phase watermark
+- **`.diary-page-left`** — left page, `rotateY(1.5deg)`, shows previous page content faded
 - **`.diary-page-right`** — right page, `rotateY(-1.5deg)`, current writing area
-- **`.diary-spine`** — center gutter shadow, Deep Moon Navy tone
+- **`.diary-spine`** — center gutter shadow, silver-blue tone
 - **`.diary-page-curl`** — bottom-right corner curl hint with moonlight highlight
+
+### Page Surface — Translucent Moon-Paper
+Diary pages use translucent moon-paper, not bright white or dark glass:
+```css
+.diary-page-surface {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(247, 240, 230, 0.68),
+      rgba(232, 237, 247, 0.48)
+    );
+  backdrop-filter: blur(8px) saturate(1.02);
+  border: 1px solid rgba(216, 227, 240, 0.22);
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.30),
+    inset 0 1px 0 rgba(232, 237, 247, 0.22);
+}
+```
+
+### Title Input — Integrated with Page
+Title input blends into the diary page, no dark block:
+```css
+.diary-title-input {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(139, 115, 85, 0.18);
+  color: #2C3E50;
+}
+.diary-title-input:focus {
+  border-bottom-color: rgba(253, 230, 138, 0.5);
+  box-shadow: 0 1px 0 0 rgba(253, 230, 138, 0.2);
+}
+```
+
+### Global Input Override Exclusion
+Diary page inputs/textareas are excluded from the global dark input style:
+```css
+.lunara-celestial-workspace .diary-page-surface input,
+.lunara-celestial-workspace .diary-page-surface textarea,
+.lunara-celestial-workspace .diary-writing-textarea,
+.lunara-celestial-workspace .diary-title-input {
+  background-color: transparent;
+  border-color: transparent;
+  color: #2C3E50;
+}
+```
 
 ### Left Page (Previous Content)
 - Shows previous page content at 30% opacity, italic
@@ -1021,12 +1094,141 @@ All animations respect `prefers-reduced-motion: reduce`:
 
 ---
 
-## 27. File/Class Reference
+## 27. Auth Password Reset
+
+### Auth Field Styling
+
+- Login/register/reset password inputs use `.lunara-auth-field`, not the workspace `.lunara-field`.
+- Auth fields are dark moon-glass surfaces with Pearl Mist text, Lunara Silver placeholders, subtle Lunara Silver borders, and a soft Moon Gold focus glow.
+- Chrome autofill must keep the dark moon-glass look. Do not allow autofill to create a bright gray, white, or yellow password field.
+- Labels stay readable and calm: Garamond, Lunara Silver, medium weight, not oversized.
+
+### Forgot Password Flow
+
+- Login includes a keyboard-accessible "Forgot password?" action near the password label.
+- The reset request is an in-card mode, not a browser alert and not a separate unthemed popup.
+- Reset request copy must be generic and must not reveal whether an account exists for an email.
+- Success message: "If an account exists for this email, a reset link has been sent."
+- Supabase call: `supabase.auth.resetPasswordForEmail(email, { redirectTo: `${window.location.origin}/reset-password` })`.
+
+### Reset Password Page
+
+- Public route: `/reset-password`.
+- Page: `src/pages/ResetPassword.tsx`.
+- Uses the same moon background/card language as Login.
+- Requires a Supabase reset-link session before calling `supabase.auth.updateUser({ password })`.
+- If no session is present, show: "Your reset link may have expired. Please request a new one."
+- Validate required password, minimum 8 characters, and matching confirmation before update.
+
+### Supabase Redirect URLs
+
+In Supabase Dashboard, open **Authentication -> URL Configuration -> Redirect URLs** and add:
+
+- Local: `http://localhost:8080/reset-password`
+- Production: `https://YOUR-VERCEL-DOMAIN/reset-password`
+
+Do not hardcode a production redirect domain unless the deployed domain is known.
+
+---
+
+## 28. Full-Page Moon Loader
+
+The full-page loading screen uses a moonlit celestial theme with a centered eclipse animation.
+
+### Component
+
+`src/components/common/LunaraPageLoader.tsx`
+
+- Full viewport overlay (`position: fixed; inset: 0`)
+- Background: `/assets/lunara-moon-bg.webp` with fallbacks to `.jpg` then `lunar lumina.jpg`
+- Background fit: `object-fit: cover` — fills entire viewport, no letterboxing
+- Overlay: dark navy gradient with subtle moon-gold radial glow
+- Content: centered eclipse loader + "Loading..." text + optional subtitle
+- Uses `role="status"` and `aria-live="polite"` for screen readers
+
+### Eclipse Animation
+
+- `.lunara-eclipse-loader`: 96px moon circle (Pearl Mist gradient, silver border, moon-gold glow)
+- `.lunara-eclipse-shadow`: dark navy circle (120px) sweeps across moon
+- Animation: `lunara-eclipse-pass` — 3s ease-in-out infinite loop
+- Shadow moves from right to left, creating eclipse effect
+
+### CSS Classes
+
+| Class | Purpose |
+|---|---|
+| `.lunara-page-loader` | Full viewport container, z-index 9999, `position: fixed` |
+| `.lunara-page-loader-bg` | Absolute-positioned image wrapper |
+| `.lunara-page-loader-overlay` | Navy gradient overlay for text readability |
+| `.lunara-page-loader-content` | Centered flex container for loader + text |
+| `.lunara-eclipse-loader` | Moon circle with gradient and glow |
+| `.lunara-eclipse-shadow` | Sweeping shadow element |
+| `.lunara-page-loader-text` | "Loading..." text (Garamond, Pearl Mist) |
+| `.lunara-page-loader-subtitle` | Optional italic subtitle |
+
+### Reduced Motion
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  .lunara-eclipse-shadow {
+    animation: none !important;
+    transform: translateX(-8px);
+  }
+}
+```
+
+Moon stays static. No flashing. Background remains visible.
+
+### Mobile
+
+- Eclipse loader: 76px (down from 96px)
+- Text: 1.05rem (down from 1.15rem)
+- Full viewport coverage maintained
+
+### Usage
+
+```tsx
+import { LunaraPageLoader } from '@/components/common/LunaraPageLoader';
+
+// Full-page loading
+<LunaraPageLoader />
+
+// With custom subtitle
+<LunaraPageLoader subtitle="Syncing your diaries..." />
+```
+
+### Where It Renders
+
+- `PrivateRoute.tsx` — while auth session is loading
+- This is the **only** full-page loading state in the app
+
+### What It Does NOT Replace
+
+- Button loading spinners (e.g., "Saving...", "Sharing...")
+- Inline loading states inside cards (e.g., MyDiaries, SharedDiaries)
+- Image upload progress indicators
+- Find People search states
+- Small `animate-spin` spinners in buttons
+
+### Background Image Priority
+
+1. `/assets/lunara-moon-bg.webp` (preferred)
+2. `/assets/lunara-moon-bg.jpg`
+3. `/assets/lunar lumina.jpg` (fallback)
+
+### Uiverse Inspiration
+
+The eclipse animation is inspired by Uiverse moon loader snippets. Only the moon-shadow passing idea was used. No generic class names (`.container`, `.loader`, `.shadow`) were introduced. All classes are scoped with `lunara-` prefix.
+
+---
+
+## 28. File/Class Reference
 
 ### Components
 
 | File | UI Responsibility |
 |---|---|
+| `LunaraPageLoader.tsx` | Full-page moon-themed loading screen with eclipse animation |
 | `Profile.tsx` | Main layout, tab routing, cover→writing flow |
 | `JournalIndexRail.tsx` | Left navigation rail (desktop) |
 | `JournalOverview.tsx` | Profile card, avatar, stats, recent diaries |
@@ -1056,12 +1258,96 @@ All animations respect `prefers-reduced-motion: reduce`:
 
 | File | Responsibility |
 |---|---|
-| `index.css` | All custom CSS: diary book, cover, ruled lines, animations, responsive, `.lunara-button`, `.diary-cover-constellation` |
+| `index.css` | All custom CSS: diary book, cover, ruled lines, animations, responsive, `.lunara-button`, `.diary-cover-constellation`, card system |
 | `tailwind.config.ts` | Color tokens (lunara-primary, lunara-silver, moon-paper, etc.), font families, animations, custom keyframes |
 
 ---
 
-## 28. Do and Don't Summary
+## 29. Card System
+
+All profile/diary workspace cards use **dark moon-glass** surfaces so the moon background remains visible and cards feel like soft night-paper panels, not pasted white rectangles. Inputs and diary writing pages remain light for readability.
+
+### Card Classes
+
+| Class | Purpose | Visual |
+|---|---|---|
+| `.lunara-glass-card` | Profile card, stats tiles, profile result cards, auth glass cards | Dark translucent moon-glass (`rgba(18,26,46,0.70)` → `rgba(11,16,32,0.58)`), deep black shadows, Pearl Mist text, moon-gold radial glow top-left |
+| `.lunara-panel-card` | Settings panels, search panels, dialogs, larger form areas | Dark panel (`rgba(232,237,247,0.18)` → `rgba(18,26,46,0.68)` → `rgba(11,16,32,0.72)`), Pearl Mist text |
+| `.lunara-diary-card` | Diary list items (My Diaries, Shared Diaries) | Dark moonlit diary cover (`rgba(18,26,46,0.78)` → `rgba(11,16,32,0.68)`), inner left spine, crescent `☽` accent, Pearl Mist text, hover lift |
+| `.lunara-dark-empty-card` | Empty states | Dark glass panel (`rgba(11,16,32,0.62)` → `rgba(18,26,46,0.48)`), Pearl Mist text, silver border |
+| `.lunara-field` | Lunara ID boxes, search inputs, form inputs, display-only info boxes | Dark translucent field (`rgba(232,237,247,0.16)` → `rgba(18,26,46,0.52)`), Pearl Mist text, silver border, for dark card surfaces |
+| `.vintage-card` | Backward-compatible alias to `.lunara-glass-card` | Same as glass card (deprecated — use `.lunara-glass-card` directly) |
+
+### Card Usage by Component
+
+| Component | Card Class |
+|---|---|
+| JournalOverview profile card | `.lunara-glass-card` |
+| JournalOverview stats cards | `.lunara-glass-card` |
+| JournalOverview recent diaries | `.lunara-panel-card` |
+| MyDiaries search bar | `.lunara-field` |
+| MyDiaries diary cards | `.lunara-diary-card` |
+| MyDiaries empty state | `.lunara-dark-empty-card` |
+| SharedDiaries Find People panel | `.lunara-panel-card` |
+| SharedDiaries Find People input | `.lunara-field` |
+| SharedDiaries profile result | `.lunara-glass-card` |
+| SharedDiaries diary cards | `.lunara-diary-card` |
+| SharedDiaries empty state | `.lunara-dark-empty-card` |
+| ProfileSettings all sections | `.lunara-panel-card` |
+| ProfileSettings Lunara ID field | `.lunara-field` |
+| ProfileSettings form inputs | `.lunara-field` |
+| ShareDiaryDialog | `.lunara-panel-card` |
+| ShareDiaryDialog input | `.lunara-field` |
+| ProfileImageCropDialog | `.lunara-panel-card` |
+| DiaryCoverStart cover | `.diary-cover-shell` (dark moon-glass variant) |
+| WriteEditor diary details dialog | `.lunara-panel-card` |
+
+### Card Styling Rules
+
+- **Background:** Dark translucent moon-glass gradients, never pure cream or pure white
+- **Border:** Silver-blue tone (`rgba(216, 227, 240, 0.22-0.26)`)
+- **Shadow:** Deep black depth (`0 24-30px 60-80px rgba(0, 0, 0, 0.32-0.44)`)
+- **Backdrop:** Blur 12-16px + saturate for glass effect
+- **Text:** Pearl Mist (`#E8EDF7`) headings, Lunara Silver / Muted Stardust for secondary
+- **Border radius:** 1.5rem–1.65rem for cards, 0.8rem for fields
+- **Hover:** Subtle lift for diary cards (`translateY(-3px)`) + moon-gold border hint
+- **Inputs:** Dark translucent `.lunara-field` surfaces for dark card consistency; diary writing pages remain light
+
+### Diary Card Specifics
+
+- Crescent moon accent (`☽`) in top-right corner, moon-gold at 55% opacity
+- Inner left spine line (`inset 8px 0 0 rgba(216, 227, 240, 0.10)`)
+- `min-height: 220px`, `max-width: 420px`
+- Grid: `repeat(auto-fit, minmax(280px, 1fr))`
+- Single card max-width: `420px`
+- Hover: `translateY(-3px)` + moon-gold border hint + deeper shadow
+
+### Empty State Styling
+
+- Dark glass panel (`.lunara-dark-empty-card` or `.lunara-empty-state`)
+- Pearl Mist text on dark background
+- Silver borders
+- Visible but not overwhelming
+
+### Text Contrast Rules (Dark Cards)
+
+- **Headings on dark cards:** Pearl Mist (`#E8EDF7`)
+- **Secondary text on dark cards:** Lunara Silver (`rgba(216, 227, 240, 0.75)`) or Muted Stardust (`#A8A6C7`)
+- **Metadata on dark cards:** Muted Stardust at 65-70% opacity
+- **Icons on dark cards:** Lunara Silver, Lunara Blue, or Moon Gold (decorative)
+- **Links/actions on dark cards:** Lunara Blue or Lunara Silver
+- **Destructive actions:** Error Rose
+- **Text inside inputs on dark cards:** Pearl Mist (`#E8EDF7`)
+- **Input placeholders on dark cards:** Lunara Silver at 55% opacity
+- **Labels outside inputs on dark cards:** Pearl Mist or Lunara Silver
+- **Text on image background:** Pearl Mist / Lunara Silver + subtle navy shadow
+- **Diary writing pages:** Remain clean moon-paper (light) for readability
+- **Placeholders:** Readable, not below 50-60% opacity
+- **Empty states:** Pearl Mist on dark glass, not ghosted
+
+---
+
+## 30. Do and Don't Summary
 
 ### Do
 - Use moon, stars, constellation, crescent, Lunara Silver as visual motifs
@@ -1120,6 +1406,157 @@ All animations respect `prefers-reduced-motion: reduce`:
 - Don't show page titles as diary titles or vice versa
 - Don't skip the crop dialog for profile images
 - Don't add animations longer than 1 second
+
+---
+
+## 31. Lunara Mood Player
+
+A bottom-right ambient music player with a moonlit aesthetic. Replaces the legacy `LunaraAmbientPlayer`.
+
+### Component
+
+`src/components/profile/LunaraAmbientPlayer.tsx`
+
+### Audio Assets
+
+| Track | File | Path |
+|---|---|---|
+| Moonlit Lofi | `Lofi Beats with Sailor Moon.mp3` | `/assets/audio/Lofi%20Beats%20with%20Sailor%20Moon.mp3` |
+| Rain at Midnight | `Lofi Rain Sound.mp3` | `/assets/audio/Lofi%20Rain%20Sound.mp3` |
+
+- Both files live in `public/assets/audio/`
+- File names contain spaces — use URL-encoded paths in `src` attributes
+- **Never** use Windows absolute paths (`D:\...`) in browser source URLs
+
+### Behavior
+
+- **No autoplay.** Audio starts only after user clicks play
+- Tracks play sequentially by default; loop and shuffle are optional toggles
+- When a track ends:
+  - Loop enabled → replay same track
+  - Shuffle enabled → play a random different track
+  - Otherwise → play next track
+- If a file fails to load: displays "This moonlit track could not be found."
+
+### Persistence (localStorage)
+
+| Key | Value | Default |
+|---|---|---|
+| `lunaraAmbientTrackIndex` | Track index (0-based) | `0` |
+| `lunaraAmbientVolume` | Volume (0–1) | `0.25` |
+| `lunaraAmbientLoop` | Loop enabled (`true`/`false`) | `false` |
+| `lunaraAmbientShuffle` | Shuffle enabled (`true`/`false`) | `false` |
+
+### Positioning
+
+- Desktop: fixed bottom-right (`right: 1.25rem; bottom: 1.25rem`)
+- Tablet: adjusted right/bottom for safe area
+- Mobile (<640px): full-width with side padding, positioned above bottom nav
+- z-index: 30 (above content, below dialogs)
+
+### Desktop Layout
+
+- **Collapsed:** compact top row — music orb + track info + play/prev/next controls (~280px wide)
+- **Expanded:** shows progress bar, time display, volume slider, loop/shuffle toggles (~380px wide)
+- Expands on hover or focus; collapses on mouse leave
+
+### Music Orb / Disc
+
+- Circular SVG disc with moon/stars/night landscape silhouette inside
+- Silver-blue border, dark navy interior
+- Center pin/dot (moon-gold glow)
+- When playing: disc rotates slowly (6s linear infinite)
+- When paused: static
+- `prefers-reduced-motion: reduce` disables rotation
+
+### Scoped CSS Classes
+
+| Class | Purpose |
+|---|---|
+| `.lunara-mood-player` | Main container (fixed, dark glass) |
+| `.lunara-mood-player-expanded` | Expanded state width |
+| `.lunara-mood-player-top` | Top row: orb + info + controls |
+| `.lunara-mood-player-body` | Expandable body (progress, volume, toggles) |
+| `.lunara-mood-player-info` | Track title + mood label |
+| `.lunara-music-orb` | Orb button wrapper |
+| `.lunara-music-orb-disc` | Spinning disc SVG container |
+| `.lunara-music-orb-disc.is-playing` | Active rotation state |
+| `.lunara-music-orb-pin` | Center pin dot |
+| `.lunara-mood-controls` | Play/skip button group |
+| `.lunara-mood-btn` | Base control button |
+| `.lunara-mood-btn-play` | Primary play/pause button |
+| `.lunara-track-progress` | Progress range slider |
+| `.lunara-volume-slider` | Volume range slider |
+| `.lunara-mood-toggle` | Loop/shuffle toggle button |
+| `.lunara-mood-toggle.is-active` | Active toggle state |
+| `.lunara-mood-time` | Time display text |
+| `.lunara-mood-error` | Missing-audio message |
+| `.lunara-mood-volume` | Volume control group |
+| `.lunara-mood-library-toggle` | Library expand/collapse button |
+| `.lunara-mood-library-loading` | Loading indicator for signed URLs |
+| `.lunara-mood-library` | Scrollable library panel container |
+| `.lunara-mood-library-list` | Track list wrapper |
+| `.lunara-mood-library-item` | Individual track row |
+| `.lunara-mood-library-item.is-active` | Currently playing track |
+| `.lunara-mood-library-item-play` | Play button per track |
+| `.lunara-mood-library-item-info` | Track title + mood wrapper |
+| `.lunara-mood-library-item-title` | Track title text |
+| `.lunara-mood-library-item-mood` | Track mood/subtitle text |
+| `.lunara-mood-library-item-delete` | Delete button (appears on hover) |
+| `.lunara-mood-library-upload` | Upload form container |
+| `.lunara-mood-upload-input` | Title/mood text inputs |
+| `.lunara-mood-upload-btn` | Upload button |
+| `.lunara-mood-upload-spinner` | Upload loading spinner |
+| `.lunara-mood-library-limit` | Max tracks reached message |
+
+### Visual Direction
+
+- Dark moon-glass card: `rgba(11, 16, 32, 0.88)` + `backdrop-filter: blur(12px)`
+- Silver-blue border: `rgba(216, 227, 240, 0.18)`
+- Pearl Mist text (`#E8EDF7`)
+- Muted Stardust secondary text (`rgba(168, 166, 199, 0.75)`)
+- Moon Gold accents on play button and active toggles (`#FDE68A`)
+- No harsh white card, no bright purple, no cartoon look
+
+### User Audio Library
+
+Default Lunara playlist tracks load from the `default_audio_tracks` table and public Supabase Storage bucket `lunara-default-audio`. User songs load from the private `user_audio_tracks` table and `user-audio` bucket. Users can upload up to 10 custom audio tracks (MP3, WAV, OGG, WebM; max 50MB each). User audio files are stored under `{user_id}/{uuid}.{ext}` and signed URLs are generated client-side with a 1-hour TTL. Default tracks (`Moonlit Lofi`, `Rain at Midnight`) always appear first and display the `Lunara` badge. Uploaded tracks display the `Private` badge. Delete button appears on hover for uploaded tracks only.
+
+Audio caching is browser-local. Supabase Storage remains the source of truth, while IndexedDB stores fully downloaded audio Blobs in `lunara-audio-cache` / `audio-blobs`. The cache key is the stable track id, not a signed URL, public URL, or filename. Default tracks initially load from Supabase public URL, then cache as IndexedDB audio Blobs after full download. Future playback should prefer the cached Blob URL. User uploaded audio uses signed URLs only as temporary playback/download URLs. Once fully downloaded, cache the Blob in IndexedDB and prefer the cached Blob URL on later playback.
+
+Cache status labels are `Cached`, `Streaming`, `Not cached`, `Caching...`, and `Cache failed`. Users can choose `Cache song`, `Remove cache`, or `Clear cached songs` in the player library. Removing cache never deletes a Supabase song. Deleting a user song deletes the Supabase object, database row, and cached Blob. The cache is per browser/device and targets a 300 MB limit; localStorage stores only player preferences, never audio Blobs. No autoplay.
+
+### Accessibility
+
+- All buttons have `aria-label`
+- `aria-pressed` on loop/shuffle toggles
+- `focus-visible` outlines: `2px solid rgba(253, 230, 138, 0.4)`
+- Keyboard-navigable — no hover-only functionality
+- `type="button"` on all buttons
+
+### Uiverse Inspiration
+
+The music disc/orb and compact player card structure were inspired by Uiverse music player snippets. Only the visual idea of a circular rotating disc with an inner icon and a compact expandable card was used. No generic class names (`.container`, `.loader`, `.shadow`) were introduced. All classes are scoped with `lunara-mood-` or `lunara-music-` prefix.
+
+### What It Does NOT Replace
+
+- Full-page moon loader (`LunaraPageLoader.tsx`)
+- Button loading spinners
+- Inline loading states
+
+---
+
+## 32. Default Audio Storage
+
+Default Lunara playlist MP3 files are stored outside GitHub in Supabase Storage. The default bucket is `lunara-default-audio` and is public in this phase. Default playlist metadata lives in `default_audio_tracks`, and the player initially resolves audio with Supabase `getPublicUrl`. After full download, default tracks cache as IndexedDB audio Blobs and future playback should prefer the cached Blob URL.
+
+User songs remain private. Uploaded user tracks are stored in the `user-audio` bucket, indexed by `user_audio_tracks`, and played through signed URLs only as temporary playback/download URLs. Once fully downloaded, the player caches the Blob in IndexedDB and prefers the cached Blob URL on later playback. This keeps private audio separate from public default audio.
+
+GitHub should not store MP3 binaries for the default playlist. `.gitignore` excludes `public/assets/audio/*.mp3` while keeping `public/assets/audio/.gitkeep` so the folder can remain in the project.
+
+Audio cache is per browser/device. A song cached on one browser is not automatically cached on another device. Supabase keeps the original file so each browser can cache it after first playback.
+
+No YouTube Music, Spotify, external streaming integration, or autoplay is part of this phase.
 
 ---
 

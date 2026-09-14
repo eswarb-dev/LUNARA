@@ -23,8 +23,8 @@ const RecentEntries: React.FC = () => {
   if (!user) {
     return (
       <div className="text-center py-12">
-        <BookMarked className="w-12 h-12 text-muted-brown/30 mx-auto mb-4" />
-        <p className="font-garamond text-lg text-muted-brown/60 italic">
+        <BookMarked className="w-12 h-12 text-muted-stardust/30 mx-auto mb-4" />
+        <p className="font-garamond text-lg text-muted-stardust/60 italic">
           Sign in to begin your private journal
         </p>
       </div>
@@ -34,13 +34,13 @@ const RecentEntries: React.FC = () => {
   if (diaries.length === 0) {
     return (
       <div className="text-center py-12">
-        <BookMarked className="w-12 h-12 text-muted-brown/30 mx-auto mb-4" />
-        <p className="font-garamond text-lg text-muted-brown/60 italic">
+        <BookMarked className="w-12 h-12 text-muted-stardust/30 mx-auto mb-4" />
+        <p className="font-garamond text-lg text-muted-stardust/60 italic">
           No diaries yet. Begin your first private book.
         </p>
         <Button
           onClick={() => navigate('/profile?tab=write')}
-          className="mt-4 vintage-button text-cream font-garamond"
+          className="lunara-button mt-4 font-garamond"
         >
           Begin writing
         </Button>
@@ -53,22 +53,22 @@ const RecentEntries: React.FC = () => {
       {diaries.map((diary) => (
         <Card
           key={diary.id}
-          className="vintage-card border-muted-brown/20 hover:shadow-lg transition-all duration-300 cursor-pointer group"
+          className="lunara-glass-card hover:shadow-lg transition-all duration-300 cursor-pointer group"
           onClick={() => navigate(`/profile?tab=write&diaryId=${diary.id}`)}
         >
           <CardContent className="p-6 space-y-4">
             <div className="flex items-center justify-between">
-              <p className="text-sm font-inter text-muted-brown">
+              <p className="text-sm font-inter text-muted-stardust">
                 {new Date(diary.updatedAt).toLocaleDateString()}
               </p>
               {diary.mood && (
-                <Badge variant="secondary" className="bg-ink-blue/10 text-ink-blue border-ink-blue/20 font-garamond text-[10px]">
+                <Badge variant="secondary" className="bg-lunara-blue/10 text-lunara-blue border-lunara-blue/20 font-garamond text-[10px]">
                   {diary.mood}
                 </Badge>
               )}
             </div>
 
-            <h3 className="text-xl font-garamond font-medium text-ink-blue leading-tight group-hover:text-forest-green transition-colors">
+            <h3 className="text-xl font-garamond font-medium text-pearl-mist leading-tight group-hover:text-lunara-accent transition-colors">
               {diary.title || 'Untitled diary'}
             </h3>
 
@@ -77,10 +77,10 @@ const RecentEntries: React.FC = () => {
             </p>
 
             <div className="flex items-center justify-between pt-2">
-              <span className="text-sm font-inter text-muted-brown">
+              <span className="text-sm font-inter text-muted-stardust">
                 {diary.readTime || Math.ceil((diary.content?.split(/\s+/).length || 0) / 200)} min read
               </span>
-              <span className="text-sm font-inter text-forest-green group-hover:underline">
+              <span className="text-sm font-inter text-lunara-accent group-hover:underline">
                 Open diary →
               </span>
             </div>

@@ -67,9 +67,9 @@ const DiaryCoverStart: React.FC<DiaryCoverStartProps> = ({ onComplete }) => {
     <div className={`diary-cover-fade ${isVisible ? 'diary-cover-visible' : ''} ${isOpening ? 'diary-cover-opening' : ''}`}>
       <div className="flex justify-center items-center min-h-[70vh]">
         <div className="diary-cover-shell">
-          {/* Floral corner decorations */}
-          <div className="diary-cover-florals">
-            <div className="diary-cover-floral diary-cover-floral-tl">
+          {/* Constellation corner decorations */}
+          <div className="diary-cover-constellations">
+            <div className="diary-cover-constellation diary-cover-constellation-tl">
               <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="12" cy="12" r="2" fill="rgba(168,166,199,0.35)"/>
                 <circle cx="25" cy="6" r="1.5" fill="rgba(168,166,199,0.25)"/>
@@ -80,7 +80,7 @@ const DiaryCoverStart: React.FC<DiaryCoverStartProps> = ({ onComplete }) => {
                 <line x1="25" y1="6" x2="35" y2="3" stroke="rgba(168,166,199,0.1)" strokeWidth="0.4"/>
               </svg>
             </div>
-            <div className="diary-cover-floral diary-cover-floral-tr">
+            <div className="diary-cover-constellation diary-cover-constellation-tr">
               <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="12" cy="12" r="2" fill="rgba(168,166,199,0.35)"/>
                 <circle cx="25" cy="6" r="1.5" fill="rgba(168,166,199,0.25)"/>
@@ -89,14 +89,14 @@ const DiaryCoverStart: React.FC<DiaryCoverStartProps> = ({ onComplete }) => {
                 <line x1="12" y1="12" x2="6" y2="25" stroke="rgba(168,166,199,0.15)" strokeWidth="0.5"/>
               </svg>
             </div>
-            <div className="diary-cover-floral diary-cover-floral-bl">
+            <div className="diary-cover-constellation diary-cover-constellation-bl">
               <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="12" cy="12" r="2" fill="rgba(168,166,199,0.35)"/>
                 <circle cx="6" cy="25" r="1.5" fill="rgba(168,166,199,0.25)"/>
                 <line x1="12" y1="12" x2="6" y2="25" stroke="rgba(168,166,199,0.15)" strokeWidth="0.5"/>
               </svg>
             </div>
-            <div className="diary-cover-floral diary-cover-floral-br">
+            <div className="diary-cover-constellation diary-cover-constellation-br">
               <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="12" cy="12" r="2" fill="rgba(168,166,199,0.35)"/>
                 <circle cx="25" cy="6" r="1.5" fill="rgba(168,166,199,0.25)"/>
@@ -118,9 +118,9 @@ const DiaryCoverStart: React.FC<DiaryCoverStartProps> = ({ onComplete }) => {
 
             {/* Ornamental divider */}
             <div className="diary-cover-divider">
-              <div className="h-px bg-gradient-to-r from-transparent via-muted-brown/30 to-transparent w-32 mx-auto"></div>
+              <div className="h-px bg-gradient-to-r from-transparent via-muted-stardust/30 to-transparent w-32 mx-auto"></div>
               <span className="diary-cover-ornament">☽</span>
-              <div className="h-px bg-gradient-to-r from-transparent via-muted-brown/30 to-transparent w-32 mx-auto"></div>
+              <div className="h-px bg-gradient-to-r from-transparent via-muted-stardust/30 to-transparent w-32 mx-auto"></div>
             </div>
 
             {/* Tagline */}

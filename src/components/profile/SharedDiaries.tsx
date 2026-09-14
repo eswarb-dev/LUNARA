@@ -12,7 +12,11 @@ import type { LunaraProfileSearchResult } from '../../types/database';
 
 const LUNA_ID_REGEX = /^LUNA-[A-Z0-9]{6}$/;
 
-const SharedDiaries = () => {
+interface SharedDiariesProps {
+  onOpenDiary: (diaryId: string) => void;
+}
+
+const SharedDiaries: React.FC<SharedDiariesProps> = ({ onOpenDiary }) => {
   const [sharedDiaries, setSharedDiaries] = useState<SharedDiary[]>([]);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
@@ -41,10 +45,6 @@ const SharedDiaries = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleOpenDiary = (diaryId: string) => {
-    window.location.href = `/profile?tab=write&diaryId=${diaryId}`;
   };
 
   const handleSearch = async () => {
@@ -112,22 +112,22 @@ const SharedDiaries = () => {
 
   if (loading) {
     return (
-      <div className="text-center py-12">
+      <div className="lunara-loading-state text-center py-12">
         <div className="w-12 h-12 border-4 border-lunara-silver/20 border-t-ink-blue rounded-full animate-spin mx-auto mb-4"></div>
-        <p className="font-garamond text-muted-brown italic">Gathering shared diaries...</p>
+        <p className="font-garamond text-muted-stardust italic">Gathering shared diaries...</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-8">
+    <div className="lunara-list-page space-y-8">
       {/* Find People Section */}
-      <div className="vintage-card border-2 border-lunara-silver/20 p-6 md:p-8">
+      <div className="lunara-panel-card p-5 md:p-7">
         <div className="flex items-center gap-3 mb-2">
-          <UserPlus className="w-5 h-5 text-ink-blue" />
-          <h3 className="text-xl font-garamond font-medium text-ink-blue">Find people</h3>
+          <UserPlus className="w-5 h-5 text-lunara-blue" />
+          <h3 className="text-xl font-garamond font-medium text-pearl-mist">Find people</h3>
         </div>
-        <p className="font-garamond text-sm text-muted-brown/60 italic mb-5">
+        <p className="font-garamond text-sm text-muted-stardust italic mb-5">
           Search with a Lunara ID to find a trusted reader.
         </p>
 
@@ -140,7 +140,7 @@ const SharedDiaries = () => {
             }}
             onKeyDown={handleKeyDown}
             placeholder="LUNA-FF6A23"
-            className="flex-1 font-garamond text-ink-blue bg-moon-paper/50 border-2 border-lunara-silver/30 focus:border-ink-blue tracking-wide"
+            className="lunara-field flex-1 font-garamond text-pearl-mist placeholder:text-lunara-silver/55 focus:border-lunara-accent tracking-wide"
           />
           <Button
             onClick={handleSearch}
@@ -149,7 +149,7 @@ const SharedDiaries = () => {
           >
             {searchStatus === 'searching' ? (
               <span className="flex items-center gap-2">
-                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <div className="w-4 h-4 border-2 border-pearl-mist/30 border-t-pearl-mist rounded-full animate-spin" />
                 Searching...
               </span>
             ) : (
@@ -163,17 +163,17 @@ const SharedDiaries = () => {
 
         {/* Status Messages */}
         {searchStatus === 'invalid' && (
-          <p className="font-garamond text-sm text-amber-700 italic mt-3">
+          <p className="font-garamond text-sm text-lunara-glow italic mt-3">
             This looks like an invalid Lunara ID.
           </p>
         )}
         {searchStatus === 'not-found' && (
-          <p className="font-garamond text-sm text-muted-brown/60 italic mt-3">
+          <p className="font-garamond text-sm text-muted-stardust/60 italic mt-3">
             No Lunara profile found.
           </p>
         )}
         {searchStatus === 'error' && (
-          <p className="font-garamond text-sm text-red-600 italic mt-3">
+          <p className="font-garamond text-sm text-error-rose italic mt-3">
             Could not search right now.
           </p>
         )}
@@ -185,12 +185,12 @@ const SharedDiaries = () => {
 
         {/* Profile Result Card */}
         {searchStatus === 'found' && foundProfile && (
-          <div className="mt-5 vintage-card border border-lunara-silver/15 p-5 bg-moon-paper/40">
+          <div className="mt-5 lunara-glass-card p-5">
             <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4">
-              <div className="w-16 h-16 rounded-full border-2 border-lunara-silver/20 p-0.5 bg-cream flex-shrink-0">
+              <div className="w-16 h-16 rounded-full border-2 border-lunara-silver/25 p-0.5 bg-lunara-silver/15 flex-shrink-0">
                 <Avatar className="w-full h-full">
                   <AvatarImage src={foundProfile.avatar_url || '/placeholder.svg'} alt="Profile" />
-                  <AvatarFallback className="text-lg font-garamond text-ink-blue bg-cream">
+                  <AvatarFallback className="text-lg font-garamond text-pearl-mist bg-deep-moon-navy">
                     {foundProfile.full_name
                       ? foundProfile.full_name.charAt(0).toUpperCase()
                       : 'L'}
@@ -202,12 +202,12 @@ const SharedDiaries = () => {
                 <p className="font-garamond text-xs text-muted-stardust font-medium mb-1">
                   Lunara profile · Trusted identity
                 </p>
-                <h4 className="font-garamond text-lg font-medium text-ink-blue">
+                <h4 className="font-garamond text-lg font-medium text-pearl-mist">
                   {foundProfile.full_name || 'Unnamed'}
                 </h4>
 
                 <div className="flex items-center gap-2 justify-center sm:justify-start mt-1">
-                  <span className="font-garamond text-sm text-muted-brown/70">
+                  <span className="font-garamond text-sm text-muted-stardust">
                     {foundProfile.lunara_user_id}
                   </span>
                   <Button
@@ -217,28 +217,28 @@ const SharedDiaries = () => {
                     onClick={() => handleCopyId(foundProfile.lunara_user_id)}
                   >
                     {copiedId ? (
-                      <Check className="w-3 h-3 text-muted-stardust" />
+                      <Check className="w-3 h-3 text-lunara-accent" />
                     ) : (
-                      <Copy className="w-3 h-3 text-muted-brown/50" />
+                      <Copy className="w-3 h-3 text-muted-stardust/60" />
                     )}
                   </Button>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-3 justify-center sm:justify-start mt-2 text-xs text-muted-brown/50 font-garamond">
+                <div className="flex flex-wrap items-center gap-3 justify-center sm:justify-start mt-2 text-xs text-muted-stardust font-garamond">
                   <span>
                     Member since {formatMemberSince(foundProfile.member_since)}
                   </span>
                   <span>·</span>
                   <span>
                     Diaries shared with you:{' '}
-                    <span className="text-ink-blue font-medium">
+                    <span className="text-pearl-mist font-medium">
                       {foundProfile.diaries_shared_with_me}
                     </span>
                   </span>
                   <span>·</span>
                   <span>
                     Your shared diaries with them:{' '}
-                    <span className="text-ink-blue font-medium">
+                    <span className="text-pearl-mist font-medium">
                       {foundProfile.my_diaries_shared_with_them}
                     </span>
                   </span>
@@ -251,14 +251,14 @@ const SharedDiaries = () => {
 
       {/* Shared Diaries List */}
       <div className="space-y-2">
-        <h2 className="text-3xl font-garamond font-bold text-ink-blue">Shared diaries</h2>
-        <p className="text-muted-brown font-garamond italic text-sm">
+        <h2 className="lunara-page-heading-on-bg text-3xl font-garamond font-bold">Shared diaries</h2>
+        <p className="lunara-subtitle-on-bg font-garamond italic text-sm">
           Diaries trusted with you
         </p>
       </div>
 
       {sharedDiaries.length > 0 ? (
-        <div className="space-y-4">
+        <div className="lunara-diary-grid">
           {sharedDiaries.map((share) => {
             const diary = share.diary;
             if (!diary) return null;
@@ -271,13 +271,13 @@ const SharedDiaries = () => {
             return (
               <div
                 key={share.id}
-                className="vintage-card border border-lunara-silver/15 p-6 hover:shadow-md transition-all duration-300 cursor-pointer group"
-                onClick={() => handleOpenDiary(diary.id)}
+                className="lunara-diary-card group"
+                onClick={() => onOpenDiary(diary.id)}
               >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-3 mb-2">
-                      <p className="font-garamond text-[0.85rem] text-muted-brown/60 italic">
+                <div className="flex h-full flex-col justify-between gap-4">
+                  <div className="min-w-0">
+                    <div className="flex flex-wrap items-center gap-2 mb-3 pr-8">
+                      <p className="font-garamond text-[0.8rem] text-muted-stardust/70 italic">
                         Shared by {ownerName}
                       </p>
                       <Badge
@@ -285,7 +285,7 @@ const SharedDiaries = () => {
                         className={`font-garamond text-[10px] ${
                           isEditable
                             ? 'border-muted-stardust/30 text-muted-stardust'
-                            : 'border-ink-blue/20 text-ink-blue'
+                            : 'border-lunara-blue/20 text-lunara-blue'
                         }`}
                       >
                         {isEditable ? (
@@ -296,25 +296,25 @@ const SharedDiaries = () => {
                       </Badge>
                     </div>
 
-                    <h3 className="text-xl font-garamond font-medium text-ink-blue mb-2 group-hover:text-muted-stardust transition-colors">
+                    <h3 className="text-lg font-garamond font-medium text-pearl-mist mb-2 group-hover:text-lunara-accent transition-colors">
                       {diary.title || 'Untitled diary'}
                     </h3>
 
-                    <p className="text-sm font-garamond text-muted-brown/70 leading-relaxed line-clamp-2 mb-3">
+                    <p className="text-sm font-garamond text-muted-stardust leading-relaxed line-clamp-3 mb-3">
                       {excerpt}...
                     </p>
 
                     <div className="flex items-center gap-4">
-                      <span className="font-garamond text-[10px] text-muted-brown/40">
+                      <span className="font-garamond text-[10px] text-muted-stardust/70">
                         {wordCount} words
                       </span>
-                      <span className="font-garamond text-[10px] text-muted-brown/40">
+                      <span className="font-garamond text-[10px] text-muted-stardust/70">
                         {new Date(share.created_at).toLocaleDateString()}
                       </span>
                     </div>
                   </div>
 
-                  <span className="font-garamond text-xs text-muted-stardust opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap flex-shrink-0">
+                  <span className="border-t border-lunara-silver/15 pt-3 font-garamond text-xs text-muted-stardust transition-colors whitespace-nowrap">
                     Open diary
                   </span>
                 </div>
@@ -323,13 +323,13 @@ const SharedDiaries = () => {
           })}
         </div>
       ) : (
-        <div className="text-center py-16">
+        <div className="lunara-dark-empty-card text-center py-16 px-6">
           <div className="ornamental-divider mb-8"></div>
-          <Users className="w-12 h-12 text-muted-brown/30 mx-auto mb-4" />
-          <p className="font-garamond text-lg text-muted-brown/60 italic leading-relaxed">
+          <Users className="w-12 h-12 text-lunara-silver/50 mx-auto mb-4" />
+          <p className="font-garamond text-lg text-pearl-mist italic leading-relaxed">
             No shared diaries yet.
           </p>
-          <p className="font-garamond text-sm text-muted-brown/40 italic mt-2">
+          <p className="font-garamond text-sm text-lunara-silver/60 italic mt-2">
             When someone trusts you with their words, they will appear here.
           </p>
           <div className="ornamental-divider mt-8"></div>

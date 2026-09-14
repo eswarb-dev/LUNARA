@@ -5,7 +5,7 @@ export const showSuccessToast = (title: string, description?: string) => {
   toast({
     title,
     description,
-    className: "bg-cream border-forest-green/30 shadow-lg font-garamond",
+    className: "font-garamond",
   });
 };
 
@@ -14,7 +14,7 @@ export const showErrorToast = (title: string, description?: string) => {
     title,
     description,
     variant: "destructive",
-    className: "bg-red-50 border-red-200 shadow-lg font-garamond",
+    className: "font-garamond",
   });
 };
 
@@ -22,7 +22,7 @@ export const showInfoToast = (title: string, description?: string) => {
   toast({
     title,
     description,
-    className: "bg-cream border-muted-brown/30 shadow-lg font-garamond",
+    className: "font-garamond",
   });
 };
 
@@ -30,6 +30,6 @@ export const showWarningToast = (title: string, description?: string) => {
   toast({
     title,
     description,
-    className: "bg-yellow-50 border-yellow-200 shadow-lg font-garamond",
+    className: "font-garamond border-moon-gold/35",
   });
 };

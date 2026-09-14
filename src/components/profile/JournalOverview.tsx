@@ -9,7 +9,11 @@ import { useAuth } from '../../context/AuthContext';
 import { profileService } from '../../services/profileService';
 import ProfileImageCropDialog from './ProfileImageCropDialog';
 
-const JournalOverview = () => {
+interface JournalOverviewProps {
+  onOpenDiary?: (diaryId: string) => void;
+}
+
+const JournalOverview: React.FC<JournalOverviewProps> = ({ onOpenDiary }) => {
   const { user, updateUser, refreshUser } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState(user?.name || '');
@@ -128,8 +132,8 @@ const JournalOverview = () => {
     <div className="space-y-8">
       {/* Header */}
       <div className="text-center">
-        <h2 className="text-3xl font-garamond font-medium text-ink-blue mb-2">Your journal space</h2>
-        <p className="text-muted-brown font-garamond italic text-sm">
+        <h2 className="lunara-page-heading-on-bg text-3xl font-garamond font-medium mb-2">Your journal space</h2>
+        <p className="lunara-subtitle-on-bg font-garamond italic text-sm">
           "A quiet place for your thoughts"
         </p>
       </div>
@@ -137,14 +141,14 @@ const JournalOverview = () => {
       <div className="ornamental-divider"></div>
 
       {/* Profile Card */}
-      <Card className="vintage-card p-8 border-2 border-lunara-silver/20">
-        <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
+      <Card className="lunara-glass-card p-6 md:p-8">
+        <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-8">
           {/* Avatar */}
-          <div className="relative">
-            <div className="w-28 h-28 rounded-full border-2 border-lunara-silver/20 p-0.5 bg-cream">
+          <div className="relative flex-shrink-0">
+            <div className="w-24 h-24 md:w-28 md:h-28 rounded-full border-2 border-lunara-silver/25 p-0.5 bg-lunara-silver/15">
               <Avatar className="w-full h-full">
                 <AvatarImage src={profileImage || "/placeholder.svg"} alt="Profile" />
-                <AvatarFallback className="text-2xl font-garamond text-ink-blue bg-cream">
+                <AvatarFallback className="text-2xl font-garamond text-pearl-mist bg-deep-moon-navy">
                   {name ? name.charAt(0).toUpperCase() : 'L'}
                 </AvatarFallback>
               </Avatar>
@@ -160,7 +164,7 @@ const JournalOverview = () => {
             <Button
               ref={cameraButtonRef}
               size="sm"
-              className="absolute -bottom-1 -right-1 rounded-full w-9 h-9 bg-ink-blue hover:bg-deep-moon-navy"
+              className="absolute -bottom-1 -right-1 rounded-full w-9 h-9 bg-ink-blue hover:bg-deep-moon-navy text-pearl-mist"
               onClick={() => fileInputRef.current?.click()}
               disabled={uploading}
               aria-label="Change profile photo"
@@ -171,7 +175,7 @@ const JournalOverview = () => {
               <Button
                 size="sm"
                 variant="outline"
-                className="absolute -bottom-1 -left-1 rounded-full w-9 h-9 border-2 border-lunara-silver/30 text-muted-brown hover:text-red-600 hover:border-red-300 bg-cream"
+                className="absolute -bottom-1 -left-1 rounded-full w-9 h-9 border-2 border-lunara-silver/30 text-muted-stardust hover:text-error-rose hover:border-error-rose/30 bg-deep-moon-navy"
                 onClick={() => {
                   setRemoveError('');
                   setRemoveDialogOpen(true);
@@ -192,31 +196,31 @@ const JournalOverview = () => {
           />
 
           <Dialog open={removeDialogOpen} onOpenChange={setRemoveDialogOpen}>
-            <DialogContent className="vintage-card border-2 border-lunara-silver/20 bg-moon-paper max-w-sm">
+            <DialogContent className="lunara-panel-card border-2 border-lunara-silver/20 max-w-sm">
               <DialogHeader>
-                <DialogTitle className="font-garamond text-xl text-ink-blue">
+                <DialogTitle className="font-garamond text-xl text-pearl-mist">
                   Remove profile photo?
                 </DialogTitle>
-                <DialogDescription className="font-garamond text-muted-brown italic">
+                <DialogDescription className="font-garamond text-muted-stardust italic">
                   Your journal will return to the default avatar.
                 </DialogDescription>
               </DialogHeader>
               {removeError && (
-                <p className="font-garamond text-sm text-red-600 italic">{removeError}</p>
+                <p className="font-garamond text-sm text-error-rose italic">{removeError}</p>
               )}
               <DialogFooter className="gap-2 sm:gap-0">
                 <Button
                   variant="outline"
                   onClick={() => setRemoveDialogOpen(false)}
                   disabled={removing}
-                  className="border-2 border-lunara-silver/30 text-muted-brown hover:bg-lunara-silver/10 font-garamond"
+                  className="border-2 border-lunara-silver/30 text-muted-stardust hover:bg-lunara-silver/10 font-garamond"
                 >
                   Cancel
                 </Button>
                 <Button
                   onClick={handleRemovePhoto}
                   disabled={removing}
-                  className="bg-red-600 hover:bg-red-700 text-white font-garamond"
+                  className="bg-error-rose hover:bg-error-rose/90 text-pearl-mist font-garamond"
                 >
                   {removing ? 'Removing...' : 'Remove photo'}
                 </Button>
@@ -231,12 +235,12 @@ const JournalOverview = () => {
                 <Input
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="text-2xl font-garamond bg-moon-paper/50 border-2 border-lunara-silver/30 focus:border-ink-blue"
+                  className="text-2xl font-garamond bg-deep-moon-navy/60 border-2 border-lunara-silver/30 focus:border-lunara-accent text-pearl-mist"
                 />
                 <textarea
                   value={bio}
                   onChange={(e) => setBio(e.target.value)}
-                  className="w-full p-3 rounded-lg bg-moon-paper/50 border-2 border-lunara-silver/30 font-garamond text-muted-brown resize-none focus:border-ink-blue"
+                  className="w-full p-3 rounded-lg bg-deep-moon-navy/60 border-2 border-lunara-silver/30 font-garamond text-pearl-mist resize-none focus:border-lunara-accent"
                   rows={3}
                   placeholder="A few words about yourself..."
                 />
@@ -247,7 +251,7 @@ const JournalOverview = () => {
                   <Button
                     variant="outline"
                     onClick={() => setIsEditing(false)}
-                    className="border-2 border-lunara-silver/30 text-muted-brown hover:bg-lunara-silver/10 font-garamond"
+                    className="border-2 border-lunara-silver/30 text-muted-stardust hover:bg-lunara-silver/10 font-garamond"
                   >
                     Cancel
                   </Button>
@@ -256,50 +260,50 @@ const JournalOverview = () => {
             ) : (
               <div className="space-y-3">
                 <div className="flex items-center gap-3 justify-center md:justify-start">
-                  <h3 className="text-2xl font-garamond font-medium text-ink-blue">{name}</h3>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => setIsEditing(true)}
-                    className="text-muted-brown hover:text-ink-blue h-8 w-8 p-0"
-                  >
-                    <Edit2 className="w-4 h-4" />
-                  </Button>
-                </div>
+                   <h3 className="text-2xl font-garamond font-medium text-pearl-mist">{name}</h3>
+                   <Button
+                     size="sm"
+                     variant="ghost"
+                     onClick={() => setIsEditing(true)}
+                     className="text-muted-stardust hover:text-pearl-mist h-8 w-8 p-0"
+                   >
+                     <Edit2 className="w-4 h-4" />
+                   </Button>
+                 </div>
 
-                {bio && (
-                  <p className="text-sm font-garamond text-muted-brown italic leading-relaxed">
-                    {bio}
-                  </p>
-                )}
+                 {bio && (
+                   <p className="text-sm font-garamond text-muted-stardust italic leading-relaxed">
+                     {bio}
+                   </p>
+                 )}
 
-                {/* Lunara User ID */}
-                {user?.lunara_user_id && (
-                  <div className="flex items-center gap-2 justify-center md:justify-start p-2 bg-moon-paper/50 border border-lunara-silver/15 rounded-lg">
-                    <span className="font-garamond text-sm text-ink-blue font-medium">{user.lunara_user_id}</span>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-6 w-6 p-0"
-                      onClick={copyLunaraId}
-                    >
-                      {copied ? <Check className="w-3 h-3 text-forest-green" /> : <Copy className="w-3 h-3" />}
-                    </Button>
-                  </div>
-                )}
+                 {/* Lunara User ID */}
+                 {user?.lunara_user_id && (
+                   <div className="lunara-field flex items-center gap-2 justify-center md:justify-start p-2">
+                      <span className="font-garamond text-sm text-pearl-mist font-medium">{user.lunara_user_id}</span>
+                     <Button
+                       variant="ghost"
+                       size="sm"
+                       className="h-6 w-6 p-0"
+                       onClick={copyLunaraId}
+                     >
+                       {copied ? <Check className="w-3 h-3 text-lunara-accent" /> : <Copy className="w-3 h-3 text-muted-stardust" />}
+                     </Button>
+                   </div>
+                 )}
 
-                <div className="flex flex-wrap items-center gap-4 justify-center md:justify-start text-xs text-muted-brown">
-                  <div className="flex items-center gap-1.5">
-                    <Calendar className="w-3.5 h-3.5" />
-                    <span className="font-garamond">
-                      Member since {user?.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <BookOpen className="w-3.5 h-3.5" />
-                    <span className="font-garamond">{user?.diaries?.length || 0} diaries</span>
-                  </div>
-                </div>
+                 <div className="flex flex-wrap items-center gap-4 justify-center md:justify-start text-xs text-muted-stardust">
+                   <div className="flex items-center gap-1.5">
+                     <Calendar className="w-3.5 h-3.5" />
+                     <span className="font-garamond">
+                       Member since {user?.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'}
+                     </span>
+                   </div>
+                   <div className="flex items-center gap-1.5">
+                     <BookOpen className="w-3.5 h-3.5" />
+                     <span className="font-garamond">{user?.diaries?.length || 0} diaries</span>
+                   </div>
+                 </div>
               </div>
             )}
           </div>
@@ -307,52 +311,56 @@ const JournalOverview = () => {
       </Card>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="vintage-card p-5 border-2 border-lunara-silver/20 text-center">
-          <Feather className="w-5 h-5 text-ink-blue mx-auto mb-2" />
-          <div className="text-2xl font-garamond font-medium text-ink-blue">{user?.diaries?.length || 0}</div>
-          <div className="text-xs font-garamond text-muted-brown">Private diaries</div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+        <Card className="lunara-glass-card p-4 md:p-5 text-center">
+          <Feather className="w-5 h-5 text-lunara-blue mx-auto mb-2" />
+          <div className="text-2xl font-garamond font-medium text-pearl-mist">{user?.diaries?.length || 0}</div>
+          <div className="text-xs font-garamond text-muted-stardust">Private diaries</div>
         </Card>
-        <Card className="vintage-card p-5 border-2 border-lunara-silver/20 text-center">
-          <BookOpen className="w-5 h-5 text-ink-blue mx-auto mb-2" />
-          <div className="text-2xl font-garamond font-medium text-ink-blue">{totalWords.toLocaleString()}</div>
-          <div className="text-xs font-garamond text-muted-brown">Words written</div>
+        <Card className="lunara-glass-card p-4 md:p-5 text-center">
+          <BookOpen className="w-5 h-5 text-muted-stardust mx-auto mb-2" />
+          <div className="text-2xl font-garamond font-medium text-pearl-mist">{totalWords.toLocaleString()}</div>
+          <div className="text-xs font-garamond text-muted-stardust">Words written</div>
         </Card>
-        <Card className="vintage-card p-5 border-2 border-lunara-silver/20 text-center">
-          <Calendar className="w-5 h-5 text-ink-blue mx-auto mb-2" />
-          <div className="text-2xl font-garamond font-medium text-ink-blue">{todayDiaries}</div>
-          <div className="text-xs font-garamond text-muted-brown">Touched today</div>
+        <Card className="lunara-glass-card p-4 md:p-5 text-center">
+          <Calendar className="w-5 h-5 text-lunara-accent mx-auto mb-2" />
+          <div className="text-2xl font-garamond font-medium text-pearl-mist">{todayDiaries}</div>
+          <div className="text-xs font-garamond text-muted-stardust">Touched today</div>
         </Card>
-        <Card className="vintage-card p-5 border-2 border-lunara-silver/20 text-center">
-          <Clock className="w-5 h-5 text-ink-blue mx-auto mb-2" />
-          <div className="text-2xl font-garamond font-medium text-ink-blue">{moodTracked}</div>
-          <div className="text-xs font-garamond text-muted-brown">Moods tracked</div>
+        <Card className="lunara-glass-card p-4 md:p-5 text-center">
+          <Clock className="w-5 h-5 text-lunara-blue mx-auto mb-2" />
+          <div className="text-2xl font-garamond font-medium text-pearl-mist">{moodTracked}</div>
+          <div className="text-xs font-garamond text-muted-stardust">Moods tracked</div>
         </Card>
       </div>
 
       {/* Recent Activity */}
       {user?.diaries && user.diaries.length > 0 && (
-        <Card className="vintage-card p-6 border-2 border-lunara-silver/20">
-          <h3 className="text-lg font-garamond font-medium text-ink-blue mb-4">Recent diaries</h3>
-          <div className="space-y-3">
+        <Card className="lunara-panel-card p-5 md:p-6">
+          <h3 className="text-lg font-garamond font-medium text-pearl-mist mb-4">Recent diaries</h3>
+          <div className="space-y-2">
             {user.diaries.slice(0, 5).map((diary) => (
               <div
                 key={diary.id}
-                className="flex items-center justify-between p-3 bg-moon-paper/40 rounded-lg border border-lunara-silver/10 hover:bg-moon-paper/60 transition-colors cursor-pointer"
+                className="flex items-center justify-between p-3 rounded-xl border border-lunara-silver/15 hover:bg-lunara-silver/8 transition-colors cursor-pointer group"
                 onClick={() => {
-                  window.location.href = `/profile?tab=write&diaryId=${diary.id}`;
+                  if (onOpenDiary) {
+                    onOpenDiary(diary.id);
+                  } else {
+                    window.location.href = `/profile?tab=write&diaryId=${diary.id}`;
+                  }
                 }}
               >
                 <div className="flex-1 min-w-0">
-                  <h4 className="font-garamond font-medium text-ink-blue text-sm truncate">
+                  <h4 className="font-garamond font-medium text-pearl-mist text-sm truncate group-hover:text-lunara-accent transition-colors">
                     {diary.title || 'Untitled'}
                   </h4>
-                  <p className="text-xs text-muted-brown font-garamond">
+                  <p className="text-xs text-muted-stardust font-garamond">
                     {new Date(diary.updated_at).toLocaleDateString()}
                     {diary.mood && <span className="ml-2">· {diary.mood}</span>}
                   </p>
                 </div>
-                <div className="text-xs text-muted-brown font-garamond ml-4 whitespace-nowrap">
+                <div className="text-xs text-muted-stardust font-garamond ml-4 whitespace-nowrap">
                   {diary.content?.split(/\s+/).length || 0} words
                 </div>
               </div>

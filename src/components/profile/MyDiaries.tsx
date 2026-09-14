@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Search, BookMarked, Clock, Trash2, PenLine, Share2 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { diaryService, type Diary } from '../../services/diaryService';
@@ -17,6 +18,11 @@ const MyDiaries: React.FC<MyDiariesProps> = ({ onOpenDiary, onShareDiary }) => {
   const [diaries, setDiaries] = useState<Diary[]>([]);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
+
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [diaryToDelete, setDiaryToDelete] = useState<Diary | null>(null);
+  const [deleting, setDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
 
   useEffect(() => {
     if (user) {
@@ -45,12 +51,31 @@ const MyDiaries: React.FC<MyDiariesProps> = ({ onOpenDiary, onShareDiary }) => {
 
   const handleDeleteDiary = async (diaryId: string) => {
     if (!user) return;
+    setDeleting(true);
+    setDeleteError(null);
     try {
       await diaryService.deleteDiary(diaryId);
       setDiaries(prev => prev.filter(d => d.id !== diaryId));
+      setDeleteDialogOpen(false);
+      setDiaryToDelete(null);
     } catch (error) {
-      console.error('Failed to delete diary:', error);
+      setDeleteError('Could not delete this diary. Please try again.');
+    } finally {
+      setDeleting(false);
     }
+  };
+
+  const openDeleteDialog = (diary: Diary) => {
+    setDiaryToDelete(diary);
+    setDeleteError(null);
+    setDeleteDialogOpen(true);
+  };
+
+  const closeDeleteDialog = () => {
+    if (deleting) return;
+    setDeleteDialogOpen(false);
+    setDiaryToDelete(null);
+    setDeleteError(null);
   };
 
   const formatRelativeTime = (dateString: string) => {
@@ -79,36 +104,36 @@ const MyDiaries: React.FC<MyDiariesProps> = ({ onOpenDiary, onShareDiary }) => {
 
   if (loading) {
     return (
-      <div className="text-center py-12">
+      <div className="lunara-loading-state text-center py-12">
         <div className="w-12 h-12 border-4 border-lunara-silver/20 border-t-ink-blue rounded-full animate-spin mx-auto mb-4"></div>
-        <p className="font-garamond text-muted-brown italic">Gathering your diaries...</p>
+        <p className="font-garamond text-muted-stardust italic">Gathering your diaries...</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="lunara-list-page space-y-6">
       <div className="space-y-2">
-        <h2 className="text-3xl font-garamond font-bold text-ink-blue">My diaries</h2>
-        <p className="text-muted-brown font-garamond italic text-sm">
+        <h2 className="lunara-page-heading-on-bg text-3xl font-garamond font-bold">My diaries</h2>
+        <p className="lunara-subtitle-on-bg font-garamond italic text-sm">
           Your private books, held safely
         </p>
       </div>
 
-      <div className="max-w-md">
+      <div className="lunara-search-row max-w-[520px]">
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-brown w-4 h-4" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-stardust/70 w-4 h-4" />
           <Input
             placeholder="Search your diaries..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 bg-moon-paper/50 border-2 border-lunara-silver/30 font-garamond focus:border-ink-blue"
+            className="lunara-field pl-10 font-garamond text-pearl-mist placeholder:text-lunara-silver/55 focus:border-lunara-accent"
           />
         </div>
       </div>
 
       {filteredDiaries.length > 0 ? (
-        <div className="space-y-4">
+        <div className="lunara-diary-grid">
           {filteredDiaries.map((diary) => {
             const wordCount = diary.content?.split(/\s+/).length || 0;
             const excerpt = diary.description || stripMetadataForDisplay(diary.content || '').substring(0, 160) || '';
@@ -116,13 +141,13 @@ const MyDiaries: React.FC<MyDiariesProps> = ({ onOpenDiary, onShareDiary }) => {
             return (
               <div
                 key={diary.id}
-                className="vintage-card border border-lunara-silver/15 p-6 hover:shadow-md transition-all duration-300 cursor-pointer group"
+                className="lunara-diary-card group"
                 onClick={() => onOpenDiary(diary.id)}
               >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-3 mb-2">
-                      <p className="font-garamond text-[0.85rem] text-muted-brown/60 italic">
+                <div className="flex h-full flex-col justify-between gap-4">
+                  <div className="min-w-0">
+                    <div className="flex flex-wrap items-center gap-2 mb-3 pr-8">
+                      <p className="font-garamond text-[0.8rem] text-muted-stardust/70 italic">
                         {formatRelativeTime(diary.updated_at)}
                       </p>
                       {diary.mood && (
@@ -130,30 +155,30 @@ const MyDiaries: React.FC<MyDiariesProps> = ({ onOpenDiary, onShareDiary }) => {
                           {diary.mood}
                         </span>
                       )}
-                      <Badge variant="outline" className="font-garamond text-[10px] border-lunara-silver/15 text-muted-brown/50">
+                      <Badge variant="outline" className="font-garamond text-[10px] border-lunara-silver/20 text-muted-stardust/60">
                         Private
                       </Badge>
                     </div>
 
-                    <h3 className="text-xl font-garamond font-medium text-ink-blue mb-2 group-hover:text-muted-stardust transition-colors">
+                    <h3 className="text-lg font-garamond font-medium text-pearl-mist mb-2 group-hover:text-lunara-accent transition-colors">
                       {diary.title || 'Untitled diary'}
                     </h3>
 
-                    <p className="text-sm font-garamond text-muted-brown/70 leading-relaxed line-clamp-2 mb-3">
+                    <p className="text-sm font-garamond text-muted-stardust leading-relaxed line-clamp-3 mb-3">
                       {excerpt}...
                     </p>
 
                     <div className="flex items-center gap-4">
-                      <span className="font-garamond text-[10px] text-muted-brown/40">
+                      <span className="font-garamond text-[10px] text-muted-stardust/70">
                         {wordCount} words
                       </span>
-                      <span className="font-garamond text-[10px] text-muted-brown/40">
+                      <span className="font-garamond text-[10px] text-muted-stardust/70">
                         {new Date(diary.updated_at).toLocaleDateString()}
                       </span>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-1 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="flex items-center justify-between gap-2 border-t border-lunara-silver/15 pt-3">
                     <span className="font-garamond text-xs text-muted-stardust whitespace-nowrap">
                       Open diary
                     </span>
@@ -161,7 +186,7 @@ const MyDiaries: React.FC<MyDiariesProps> = ({ onOpenDiary, onShareDiary }) => {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="h-8 w-8 p-0 text-muted-brown/40 hover:text-muted-brown"
+                        className="h-8 w-8 p-0 text-muted-stardust/50 hover:text-muted-stardust"
                         onClick={(e) => {
                           e.stopPropagation();
                           onShareDiary(diary.id);
@@ -173,13 +198,12 @@ const MyDiaries: React.FC<MyDiariesProps> = ({ onOpenDiary, onShareDiary }) => {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="h-8 w-8 p-0 text-muted-brown/40 hover:text-red-600"
+                      className="h-8 w-8 p-0 text-muted-stardust/50 hover:text-error-rose"
                       onClick={(e) => {
                         e.stopPropagation();
-                        if (confirm('This diary will be removed forever.')) {
-                          handleDeleteDiary(diary.id);
-                        }
+                        openDeleteDialog(diary);
                       }}
+                      aria-label="Delete diary"
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>
@@ -190,18 +214,58 @@ const MyDiaries: React.FC<MyDiariesProps> = ({ onOpenDiary, onShareDiary }) => {
           })}
         </div>
       ) : (
-        <div className="text-center py-16">
+        <div className="lunara-dark-empty-card text-center py-16 px-6">
           <div className="ornamental-divider mb-8"></div>
-          <BookMarked className="w-12 h-12 text-muted-brown/30 mx-auto mb-4" />
-          <p className="font-garamond text-lg text-muted-brown/60 italic leading-relaxed">
+          <BookMarked className="w-12 h-12 text-lunara-silver/50 mx-auto mb-4" />
+          <p className="font-garamond text-lg text-pearl-mist italic leading-relaxed">
             No diaries yet. Begin your first private book.
           </p>
-          <p className="font-garamond text-sm text-muted-brown/40 italic mt-2">
+          <p className="font-garamond text-sm text-lunara-silver/60 italic mt-2">
             Your thoughts will rest here safely.
           </p>
           <div className="ornamental-divider mt-8"></div>
         </div>
       )}
+
+      <Dialog
+        open={deleteDialogOpen}
+        onOpenChange={(open) => {
+          if (!open) closeDeleteDialog();
+        }}
+      >
+        <DialogContent className="lunara-danger-dialog max-w-sm">
+          <DialogHeader>
+            <DialogTitle className="font-garamond text-xl text-pearl-mist">
+              Delete this diary?
+            </DialogTitle>
+            <DialogDescription className="font-garamond text-lunara-silver/80 italic">
+              This diary will be removed forever. This cannot be undone.
+            </DialogDescription>
+          </DialogHeader>
+          {deleteError && (
+            <p className="font-garamond text-sm text-error-rose italic" role="alert">{deleteError}</p>
+          )}
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={closeDeleteDialog}
+              disabled={deleting}
+              className="border-2 border-lunara-silver/30 bg-transparent text-lunara-silver hover:bg-lunara-silver/10 hover:text-pearl-mist font-garamond"
+            >
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              onClick={() => diaryToDelete && handleDeleteDiary(diaryToDelete.id)}
+              disabled={deleting}
+              className="bg-error-rose hover:bg-error-rose/90 text-pearl-mist font-garamond shadow-lg shadow-error-rose/20"
+            >
+              {deleting ? 'Deleting...' : 'Delete diary'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

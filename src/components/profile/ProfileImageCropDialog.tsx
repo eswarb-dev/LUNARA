@@ -65,18 +65,18 @@ const ProfileImageCropDialog: React.FC<ProfileImageCropDialogProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[480px] bg-moon-paper border-2 border-lunara-silver/20 shadow-xl">
+      <DialogContent className="sm:max-w-[480px] lunara-panel-card border-2 border-lunara-silver/20 shadow-xl">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-garamond font-bold text-ink-blue">
+          <DialogTitle className="text-2xl font-garamond font-bold text-pearl-mist">
             Adjust your profile photo
           </DialogTitle>
-          <DialogDescription className="font-garamond text-muted-brown italic">
+          <DialogDescription className="font-garamond text-muted-stardust italic">
             Frame the image before saving it to your journal.
           </DialogDescription>
         </DialogHeader>
 
         {imageSrc && (
-          <div className="relative w-full aspect-square rounded-xl overflow-hidden border-2 border-lunara-silver/20 bg-cream">
+          <div className="relative w-full aspect-square rounded-xl overflow-hidden border-2 border-lunara-silver/20 bg-moon-paper/60">
             <Cropper
               image={imageSrc}
               crop={crop}
@@ -93,7 +93,7 @@ const ProfileImageCropDialog: React.FC<ProfileImageCropDialogProps> = ({
 
         <div className="space-y-4 px-1">
           <div>
-            <label className="block font-garamond text-sm text-ink-blue mb-2 font-medium">
+            <label className="block font-garamond text-sm text-pearl-mist mb-2 font-medium">
               Zoom
             </label>
             <Slider
@@ -106,7 +106,7 @@ const ProfileImageCropDialog: React.FC<ProfileImageCropDialogProps> = ({
             />
           </div>
           <div>
-            <label className="block font-garamond text-sm text-ink-blue mb-2 font-medium">
+            <label className="block font-garamond text-sm text-pearl-mist mb-2 font-medium">
               Rotate
             </label>
             <Slider
@@ -125,7 +125,7 @@ const ProfileImageCropDialog: React.FC<ProfileImageCropDialogProps> = ({
             variant="outline"
             onClick={handleCancel}
             disabled={uploading}
-            className="border-2 border-lunara-silver/30 text-muted-brown hover:bg-lunara-silver/10 font-garamond"
+            className="border-2 border-lunara-silver/30 text-muted-stardust hover:bg-lunara-silver/10 font-garamond"
           >
             Cancel
           </Button>

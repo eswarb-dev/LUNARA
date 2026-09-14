@@ -97,11 +97,11 @@ const ProfileSettings = () => {
   };
 
   return (
-    <div className="space-y-8 max-w-4xl mx-auto">
+    <div className="space-y-6 md:space-y-8 max-w-4xl mx-auto">
        <div className="text-center">
-         <h2 className="text-3xl font-garamond font-bold text-ink-blue mb-2">Lunara Settings</h2>
-         <p className="text-muted-brown font-garamond italic">
-            "Customize your moonlit journal experience"
+         <h2 className="lunara-page-heading-on-bg text-3xl font-garamond font-bold mb-2">Lunara Settings</h2>
+         <p className="lunara-subtitle-on-bg font-garamond italic">
+           "Customize your moonlit journal experience"
          </p>
        </div>
 
@@ -109,78 +109,78 @@ const ProfileSettings = () => {
 
       {/* Lunara User ID */}
       {user?.lunara_user_id && (
-        <Card className="vintage-card p-8 border-2 border-lunara-silver/20">
-          <div className="flex items-center gap-3 mb-6">
-            <Shield className="w-6 h-6 text-ink-blue" />
-            <h3 className="text-2xl font-garamond font-bold text-ink-blue">Your Lunara ID</h3>
+        <Card className="lunara-panel-card p-6 md:p-8">
+          <div className="flex items-center gap-3 mb-5">
+            <Shield className="w-6 h-6 text-lunara-blue" />
+            <h3 className="text-2xl font-garamond font-bold text-pearl-mist">Your Lunara ID</h3>
           </div>
-          <p className="text-muted-brown font-garamond mb-4">
+          <p className="text-muted-stardust font-garamond mb-4">
             Share this ID with trusted friends so they can share their private diaries with you.
           </p>
-          <div className="flex items-center gap-3 p-4 bg-cream/50 border border-lunara-silver/15 rounded-lg">
-            <span className="font-garamond text-xl text-ink-blue font-medium tracking-wide">{user.lunara_user_id}</span>
+          <div className="lunara-field flex items-center gap-3 p-4">
+            <span className="font-garamond text-xl text-pearl-mist font-medium tracking-wide">{user.lunara_user_id}</span>
             <Button
               variant="ghost"
               size="sm"
               onClick={copyLunaraId}
               className="ml-auto"
             >
-              {copied ? <Check className="w-4 h-4 text-forest-green" /> : <Copy className="w-4 h-4" />}
+              {copied ? <Check className="w-4 h-4 text-muted-stardust" /> : <Copy className="w-4 h-4" />}
               <span className="ml-2 font-garamond">{copied ? 'Copied' : 'Copy'}</span>
             </Button>
           </div>
         </Card>
       )}
 
-      <Card className="vintage-card p-8 border-2 border-lunara-silver/20">
-        <div className="flex items-center gap-3 mb-6">
-          <User className="w-6 h-6 text-ink-blue" />
-          <h3 className="text-2xl font-garamond font-bold text-ink-blue">Profile Information</h3>
+      <Card className="lunara-panel-card p-6 md:p-8">
+        <div className="flex items-center gap-3 mb-5">
+          <User className="w-6 h-6 text-lunara-accent" />
+          <h3 className="text-2xl font-garamond font-bold text-pearl-mist">Profile Information</h3>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
-            <label className="block font-garamond text-lg text-ink-blue mb-2 font-medium">
+            <label className="block font-garamond text-lg text-pearl-mist mb-2 font-medium">
               Display Name
             </label>
             <Input
               value={profileData.displayName}
               onChange={(e) => setProfileData({...profileData, displayName: e.target.value})}
-              className="bg-moon-paper/50 border-2 border-lunara-silver/30 font-garamond focus:border-ink-blue"
+              className="lunara-field font-garamond focus:border-lunara-accent"
             />
           </div>
           <div>
-            <label className="block font-garamond text-lg text-ink-blue mb-2 font-medium">
+            <label className="block font-garamond text-lg text-pearl-mist mb-2 font-medium">
               Email Address
             </label>
             <Input
               type="email"
               value={profileData.email}
               disabled
-              className="bg-moon-paper/50 border-2 border-lunara-silver/30 font-garamond focus:border-ink-blue opacity-60"
+              className="lunara-field font-garamond text-lunara-silver/50 opacity-70"
             />
           </div>
           <div className="md:col-span-2">
-            <label className="block font-garamond text-lg text-ink-blue mb-2 font-medium">
+            <label className="block font-garamond text-lg text-pearl-mist mb-2 font-medium">
               Bio
             </label>
             <textarea
               value={profileData.bio}
               onChange={(e) => setProfileData({...profileData, bio: e.target.value})}
-              className="w-full p-3 rounded-lg bg-moon-paper/50 border-2 border-lunara-silver/30 font-garamond focus:border-ink-blue resize-none"
+              className="w-full p-3 rounded-xl lunara-field font-garamond focus:border-lunara-accent resize-none"
               rows={3}
             />
           </div>
         </div>
       </Card>
 
-      <Card className="vintage-card p-8 border-2 border-lunara-silver/20">
-        <div className="flex items-center gap-3 mb-6">
-          <Palette className="w-6 h-6 text-ink-blue" />
-          <h3 className="text-2xl font-garamond font-bold text-ink-blue">Preferences</h3>
+      <Card className="lunara-panel-card p-6 md:p-8">
+        <div className="flex items-center gap-3 mb-5">
+          <Palette className="w-6 h-6 text-lunara-blue" />
+          <h3 className="text-2xl font-garamond font-bold text-pearl-mist">Preferences</h3>
         </div>
-        <div className="space-y-6">
+        <div className="space-y-5">
           <div>
-            <label className="block font-garamond text-lg text-ink-blue mb-3 font-medium">
+            <label className="block font-garamond text-lg text-pearl-mist mb-3 font-medium">
               Accent Color
             </label>
             <div className="flex items-center gap-4">
@@ -188,17 +188,17 @@ const ProfileSettings = () => {
                 type="color"
                 value={preferences.accentColor}
                 onChange={(e) => setPreferences(prev => ({...prev, accentColor: e.target.value}))}
-                className="w-12 h-12 rounded-lg border-2 border-lunara-silver/30 cursor-pointer"
+                className="w-12 h-12 rounded-xl border-2 border-lunara-silver/30 cursor-pointer"
               />
-              <span className="font-garamond text-muted-brown">{preferences.accentColor}</span>
+              <span className="font-garamond text-muted-stardust">{preferences.accentColor}</span>
             </div>
           </div>
           <div>
-            <label className="block font-garamond text-lg text-ink-blue mb-3 font-medium">
+            <label className="block font-garamond text-lg text-pearl-mist mb-3 font-medium">
               Language
             </label>
             <Select value={preferences.language} onValueChange={(value) => setPreferences(prev => ({...prev, language: value}))}>
-              <SelectTrigger className="bg-moon-paper/50 border-2 border-lunara-silver/30 font-garamond">
+              <SelectTrigger className="lunara-field font-garamond">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -211,8 +211,8 @@ const ProfileSettings = () => {
           </div>
           <div className="flex items-center justify-between">
             <div>
-              <h4 className="font-garamond text-lg text-ink-blue font-medium">Daily Reminder</h4>
-              <p className="text-muted-brown font-garamond text-sm">Get reminded to write every day</p>
+              <h4 className="font-garamond text-lg text-pearl-mist font-medium">Daily Reminder</h4>
+              <p className="text-muted-stardust font-garamond text-sm">Get reminded to write every day</p>
             </div>
             <Switch
               checked={preferences.dailyReminder}
@@ -222,28 +222,28 @@ const ProfileSettings = () => {
         </div>
       </Card>
 
-      <Card className="vintage-card p-8 border-2 border-lunara-silver/20">
-        <div className="flex items-center gap-3 mb-6">
-          <Download className="w-6 h-6 text-ink-blue" />
-          <h3 className="text-2xl font-garamond font-bold text-ink-blue">Export Data</h3>
+      <Card className="lunara-panel-card p-6 md:p-8">
+        <div className="flex items-center gap-3 mb-5">
+          <Download className="w-6 h-6 text-muted-stardust" />
+          <h3 className="text-2xl font-garamond font-bold text-pearl-mist">Export Data</h3>
         </div>
-        <p className="text-muted-brown font-garamond mb-6">
+        <p className="text-muted-stardust font-garamond mb-5">
           Download all your private diaries and data as JSON.
         </p>
-        <Button onClick={handleExportData} variant="outline" className="border-2 border-lunara-silver/30 text-muted-brown hover:bg-lunara-silver/10 font-garamond">
+        <Button onClick={handleExportData} variant="outline" className="border-2 border-lunara-silver/30 text-muted-stardust hover:bg-lunara-silver/10 font-garamond">
           Export as JSON
         </Button>
       </Card>
 
-      <div className="flex justify-between mt-8">
+      <div className="flex justify-between items-center pt-4">
         <Button
           variant="outline"
-          className="border-2 border-red-600 text-red-600 hover:bg-red-100 font-garamond"
+          className="border-2 border-error-rose/50 text-error-rose hover:bg-error-rose/10 font-garamond"
           onClick={handleLogout}
         >
           Logout
         </Button>
-        <Button onClick={handleSaveAllSettings} className="lunara-button text-cream font-garamond px-8 py-3 text-lg shadow-lg">
+        <Button onClick={handleSaveAllSettings} className="lunara-button text-pearl-mist font-garamond px-8 py-3 text-lg shadow-lg">
           Save Changes
         </Button>
       </div>

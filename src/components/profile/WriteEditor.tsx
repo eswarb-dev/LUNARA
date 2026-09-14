@@ -154,9 +154,10 @@ interface WriteEditorProps {
   initialDiaryId?: string;
   initialTitle?: string;
   initialDescription?: string;
+  onInvalidDiary?: () => void;
 }
 
-const WriteEditor: React.FC<WriteEditorProps> = ({ initialDiaryId, initialTitle, initialDescription }) => {
+const WriteEditor: React.FC<WriteEditorProps> = ({ initialDiaryId, initialTitle, initialDescription, onInvalidDiary }) => {
   const { user } = useAuth();
   const [searchParams] = useSearchParams();
   const draftId = initialDiaryId || searchParams.get('draftId') || searchParams.get('diaryId');
@@ -185,6 +186,7 @@ const WriteEditor: React.FC<WriteEditorProps> = ({ initialDiaryId, initialTitle,
   const [detailsDescription, setDetailsDescription] = useState('');
   const [detailsSaving, setDetailsSaving] = useState(false);
   const [imageUploadStatus, setImageUploadStatus] = useState<'idle' | 'uploading' | 'done' | 'error'>('idle');
+  const [diaryLoadError, setDiaryLoadError] = useState<string | null>(null);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const measureRef = useRef<HTMLDivElement>(null);
@@ -235,6 +237,7 @@ const WriteEditor: React.FC<WriteEditorProps> = ({ initialDiaryId, initialTitle,
 
   useEffect(() => {
     if (draftId && user) {
+      setDiaryLoadError(null);
       const fetchDiary = async () => {
         try {
           const { data, error } = await supabase
@@ -244,18 +247,21 @@ const WriteEditor: React.FC<WriteEditorProps> = ({ initialDiaryId, initialTitle,
             .single();
 
           if (error) throw error;
-          if (data) {
-            setDiaryTitle(data.title || '');
-            const parsed = parseDiaryContent(data.content || '');
-            setPages(parsed.pages);
-            setPageTitles(parsed.pageTitles);
-            setMood(data.mood || '');
-            setTags([...(data.mood_tags || []), ...(data.emotion_tags || []), ...(data.life_balance_tags || [])]);
-            setExcerpt(data.description || data.content?.substring(0, 160) || '');
-            lastSavedContentRef.current = data.content || '';
+          if (!data) {
+            setDiaryLoadError('Diary not found.');
+            return;
           }
+          setDiaryTitle(data.title || '');
+          const parsed = parseDiaryContent(data.content || '');
+          setPages(parsed.pages);
+          setPageTitles(parsed.pageTitles);
+          setMood(data.mood || '');
+          setTags([...(data.mood_tags || []), ...(data.emotion_tags || []), ...(data.life_balance_tags || [])]);
+          setExcerpt(data.description || data.content?.substring(0, 160) || '');
+          lastSavedContentRef.current = data.content || '';
         } catch (error) {
           console.error('Failed to load diary:', error);
+          setDiaryLoadError('Could not load this diary. It may have been removed or you may not have access.');
         }
       };
       fetchDiary();
@@ -841,6 +847,28 @@ const WriteEditor: React.FC<WriteEditorProps> = ({ initialDiaryId, initialTitle,
 
   return (
     <div className="diary-book-perspective">
+      {diaryLoadError && (
+        <div className="lunara-dark-empty-card text-center py-16 px-6 max-w-md mx-auto">
+          <div className="ornamental-divider mb-8"></div>
+          <BookOpen className="w-12 h-12 text-lunara-silver/50 mx-auto mb-4" />
+          <p className="font-garamond text-lg text-pearl-mist italic leading-relaxed mb-2">
+            {diaryLoadError}
+          </p>
+          <p className="font-garamond text-sm text-lunara-silver/60 italic mb-6">
+            This diary may have been removed or you may not have access.
+          </p>
+          <button
+            onClick={onInvalidDiary}
+            className="lunara-button text-pearl-mist font-garamond px-6 py-2 rounded-lg"
+          >
+            Back to My Diaries
+          </button>
+          <div className="ornamental-divider mt-8"></div>
+        </div>
+      )}
+
+      {!diaryLoadError && (
+      <>
       <div className="flex justify-center mb-6">
         <div className="diary-tab-bookmark-strip">
           <button
@@ -1319,7 +1347,7 @@ const WriteEditor: React.FC<WriteEditorProps> = ({ initialDiaryId, initialTitle,
 
       {showDetailsDialog && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink-blue/20 backdrop-blur-sm">
-          <div className="vintage-card border border-lunara-silver/15 rounded-xl p-6 w-full max-w-md mx-4 shadow-lg">
+          <div className="lunara-panel-card p-6 w-full max-w-md mx-4">
             <h3 className="text-xl font-garamond font-medium text-ink-blue mb-4">Diary details</h3>
 
             <div className="space-y-4">
@@ -1334,7 +1362,7 @@ const WriteEditor: React.FC<WriteEditorProps> = ({ initialDiaryId, initialTitle,
                   onChange={(e) => setDetailsTitle(e.target.value)}
                   placeholder="Diary name"
                   maxLength={80}
-                  className="w-full bg-moon-paper/50 border border-lunara-silver/20 rounded-lg px-3 py-2 font-garamond text-ink-blue text-[0.9rem] focus:outline-none focus:border-ink-blue/30 placeholder:text-muted-brown/40"
+                  className="w-full bg-moon-paper/90 border border-lunara-silver/30 rounded-lg px-3 py-2 font-garamond text-ink-blue text-[0.9rem] focus:outline-none focus:border-ink-blue/30 placeholder:text-muted-brown/60"
                 />
               </div>
 
@@ -1349,7 +1377,7 @@ const WriteEditor: React.FC<WriteEditorProps> = ({ initialDiaryId, initialTitle,
                   placeholder="A short description…"
                   maxLength={240}
                   rows={3}
-                  className="w-full bg-moon-paper/50 border border-lunara-silver/20 rounded-lg px-3 py-2 font-garamond text-ink-blue text-[0.9rem] focus:outline-none focus:border-ink-blue/30 resize-none placeholder:text-muted-brown/40"
+                  className="w-full bg-moon-paper/90 border border-lunara-silver/30 rounded-lg px-3 py-2 font-garamond text-ink-blue text-[0.9rem] focus:outline-none focus:border-ink-blue/30 resize-none placeholder:text-muted-brown/60"
                 />
               </div>
             </div>
@@ -1371,6 +1399,8 @@ const WriteEditor: React.FC<WriteEditorProps> = ({ initialDiaryId, initialTitle,
             </div>
           </div>
         </div>
+      )}
+      </>
       )}
     </div>
   );

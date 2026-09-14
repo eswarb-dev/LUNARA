@@ -172,3 +172,36 @@ export interface LunaraProfileSearchResult {
   diaries_shared_with_me: number;
   my_diaries_shared_with_them: number;
 }
+
+export interface UserAudioTrack {
+  id: string;
+  user_id: string;
+  title: string;
+  mood: string;
+  storage_path: string;
+  duration_seconds: number | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface DefaultAudioTrack {
+  id: string;
+  title: string;
+  mood_label: string;
+  bucket_id: string;
+  storage_path: string;
+  content_type: string | null;
+  duration_seconds: number | null;
+  sort_order: number;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface LunaraPlayableTrack {
+  id: string;
+  title: string;
+  moodLabel: string;
+  src: string;
+  source: 'default' | 'user';
+}

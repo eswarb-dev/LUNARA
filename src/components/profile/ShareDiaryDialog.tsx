@@ -72,34 +72,34 @@ const ShareDiaryDialog: React.FC<ShareDiaryDialogProps> = ({ diaryId, open, onCl
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="absolute inset-0 bg-ink-blue/20 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-moon-paper border border-lunara-silver/20 rounded-lg shadow-xl max-w-md w-full mx-4 p-6">
+      <div className="absolute inset-0 bg-lunara-primary/60 backdrop-blur-sm" onClick={onClose} />
+      <div className="relative lunara-panel-card max-w-md w-full mx-4 p-6">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
-            <Share2 className="w-5 h-5 text-ink-blue" />
-            <h3 className="text-xl font-garamond font-medium text-ink-blue">Share this diary</h3>
+            <Share2 className="w-5 h-5 text-lunara-blue" />
+            <h3 className="text-xl font-garamond font-medium text-pearl-mist">Share this diary</h3>
           </div>
-          <button onClick={onClose} className="text-muted-brown hover:text-ink-blue">
+          <button onClick={onClose} className="text-muted-stardust hover:text-pearl-mist transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Your Lunara ID */}
         {user?.lunara_user_id && (
-          <div className="mb-6 p-3 bg-cream/50 border border-lunara-silver/15 rounded-lg">
-            <p className="text-xs font-garamond text-muted-brown/60 mb-1">Your Lunara ID</p>
+          <div className="lunara-field mb-6 p-3">
+            <p className="text-xs font-garamond text-muted-stardust mb-1">Your Lunara ID</p>
             <div className="flex items-center gap-2">
-              <span className="font-garamond text-sm text-ink-blue font-medium">{user.lunara_user_id}</span>
+              <span className="font-garamond text-sm text-pearl-mist font-medium">{user.lunara_user_id}</span>
               <Button
                 variant="ghost"
                 size="sm"
                 className="h-6 w-6 p-0"
                 onClick={copyLunaraId}
               >
-                {copied ? <Check className="w-3 h-3 text-forest-green" /> : <Copy className="w-3 h-3" />}
+                {copied ? <Check className="w-3 h-3 text-lunara-accent" /> : <Copy className="w-3 h-3 text-muted-stardust/60" />}
               </Button>
             </div>
-            <p className="text-[10px] font-garamond text-muted-brown/40 mt-1 italic">
+            <p className="text-[10px] font-garamond text-muted-stardust/70 mt-1 italic">
               Share this ID with trusted friends so they can share diaries with you
             </p>
           </div>
@@ -108,26 +108,26 @@ const ShareDiaryDialog: React.FC<ShareDiaryDialogProps> = ({ diaryId, open, onCl
         {/* Share form */}
         <div className="space-y-4">
           <div>
-            <label className="block font-garamond text-sm text-ink-blue mb-1">
+            <label className="block font-garamond text-sm text-pearl-mist mb-1">
               Enter their Lunara ID
             </label>
             <Input
               value={lunaraId}
               onChange={(e) => setLunaraId(e.target.value)}
               placeholder="LUNA-XXXXXX"
-              className="bg-cream/50 border-2 border-lunara-silver/30 font-garamond focus:border-ink-blue uppercase"
+              className="lunara-field font-garamond text-pearl-mist placeholder:text-lunara-silver/55 focus:border-lunara-accent uppercase"
             />
           </div>
 
           <div>
-            <label className="block font-garamond text-sm text-ink-blue mb-2">Permission</label>
+            <label className="block font-garamond text-sm text-pearl-mist mb-2">Permission</label>
             <div className="flex gap-2">
               <Button
                 type="button"
                 variant={permission === 'read' ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setPermission('read')}
-                className={permission === 'read' ? 'bg-ink-blue text-cream' : 'border-lunara-silver/30 text-muted-brown'}
+                className={permission === 'read' ? 'bg-ink-blue text-pearl-mist' : 'border-lunara-silver/30 text-muted-stardust'}
               >
                 Read only
               </Button>
@@ -136,7 +136,7 @@ const ShareDiaryDialog: React.FC<ShareDiaryDialogProps> = ({ diaryId, open, onCl
                 variant={permission === 'edit' ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setPermission('edit')}
-                className={permission === 'edit' ? 'bg-ink-blue text-cream' : 'border-lunara-silver/30 text-muted-brown'}
+                className={permission === 'edit' ? 'bg-ink-blue text-pearl-mist' : 'border-lunara-silver/30 text-muted-stardust'}
               >
                 Can edit
               </Button>
@@ -144,7 +144,7 @@ const ShareDiaryDialog: React.FC<ShareDiaryDialogProps> = ({ diaryId, open, onCl
           </div>
 
           {error && (
-            <p className="text-sm text-red-600 font-garamond">{error}</p>
+            <p className="text-sm text-error-rose font-garamond">{error}</p>
           )}
 
           <Button
@@ -159,12 +159,12 @@ const ShareDiaryDialog: React.FC<ShareDiaryDialogProps> = ({ diaryId, open, onCl
         {/* Existing shares */}
         {shares.length > 0 && (
           <div className="mt-6 pt-4 border-t border-lunara-silver/15">
-            <p className="text-xs font-garamond text-muted-brown/60 mb-3">Shared with</p>
+            <p className="text-xs font-garamond text-muted-stardust mb-3">Shared with</p>
             <div className="space-y-2">
               {shares.map((share) => (
                 <div key={share.id} className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="font-garamond text-sm text-ink-blue">
+                    <span className="font-garamond text-sm text-pearl-mist">
                       {(share.shared_with as any)?.full_name || 'Unknown'}
                     </span>
                     <Badge variant="outline" className="font-garamond text-[10px]">
@@ -174,7 +174,7 @@ const ShareDiaryDialog: React.FC<ShareDiaryDialogProps> = ({ diaryId, open, onCl
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="h-6 w-6 p-0 text-muted-brown/40 hover:text-red-600"
+                    className="h-6 w-6 p-0 text-muted-stardust/50 hover:text-error-rose"
                     onClick={() => handleRemoveShare(share.id)}
                   >
                     <X className="w-3 h-3" />
