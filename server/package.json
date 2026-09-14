@@ -1,0 +1,41 @@
+{
+  "name": "lunara-server",
+  "version": "1.0.0",
+  "description": "Lunara — Moonlit Emotional Journal Backend",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc && prisma generate",
+    "dev": "npm run build && node dist/src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed": "node --loader ts-node/esm prisma/seed.ts",
+    "start": "node dist/src/index.js",
+    "migrate": "prisma migrate deploy"
+  },
+  "keywords": ["lunara", "journal", "diary", "emotional", "psychology"],
+  "author": "Lunara Team",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@paralleldrive/cuid2": "^2.2.2",
+    "@prisma/client": "^6.11.1",
+    "@prisma/extension-accelerate": "^2.0.1",
+    "cloudinary": "^2.7.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.0.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.1"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cookie-parser": "^1.4.9",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/multer": "^1.4.13",
+    "bcryptjs": "^3.0.2",
+    "prisma": "^6.11.1",
+    "ts-node-dev": "^2.0.0"
+  }
+}

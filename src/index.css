@@ -1,0 +1,1804 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
+
+@layer base {
+  :root {
+    --background: 36 30% 95%;
+    --foreground: 210 20% 25%;
+
+    --card: 36 30% 97%;
+    --card-foreground: 210 20% 25%;
+
+    --popover: 36 30% 97%;
+    --popover-foreground: 210 20% 25%;
+
+    --primary: 222 47% 11%;
+    --primary-foreground: 36 30% 97%;
+
+    --secondary: 240 10% 93%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 240 10% 93%;
+    --muted-foreground: 220 10% 45%;
+
+    --accent: 240 10% 93%;
+    --accent-foreground: 222 47% 11%;
+
+    --destructive: 0 60% 45%;
+    --destructive-foreground: 36 30% 97%;
+
+    --border: 220 14% 89%;
+    --input: 220 14% 89%;
+    --ring: 47 89% 62%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 222 47% 8%;
+    --sidebar-foreground: 220 14% 89%;
+    --sidebar-primary: 222 47% 11%;
+    --sidebar-primary-foreground: 36 30% 97%;
+    --sidebar-accent: 220 14% 89%;
+    --sidebar-accent-foreground: 222 47% 11%;
+    --sidebar-border: 220 14% 89%;
+    --sidebar-ring: 222 47% 11%;
+
+    --lunara-primary: 11 16 32;
+    --lunara-accent: 167 139 250;
+    --lunara-silver: 216 227 240;
+    --lunara-blue: 96 165 250;
+    --lunara-glow: 253 230 138;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-moon-paper text-ink-blue font-garamond;
+    background-image: 
+      /* Moon-paper base with subtle moonlight glow */
+      radial-gradient(ellipse at 50% 0%, rgba(216, 227, 240, 0.12) 0%, transparent 60%),
+      /* Subtle star speckles */
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cg fill='%23A8A6C7' opacity='0.03'%3E%3Ccircle cx='20' cy='20' r='0.5'/%3E%3Ccircle cx='80' cy='80' r='0.4'/%3E%3Ccircle cx='140' cy='40' r='0.6'/%3E%3Ccircle cx='60' cy='160' r='0.3'/%3E%3Ccircle cx='180' cy='120' r='0.5'/%3E%3Ccircle cx='40' cy='100' r='0.4'/%3E%3Ccircle cx='120' cy='180' r='0.3'/%3E%3Ccircle cx='160' cy='60' r='0.5'/%3E%3Ccircle cx='100' cy='20' r='0.4'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 100% 400px, 200px 200px;
+    background-repeat: no-repeat, repeat;
+    background-position: top center, 0 0;
+    position: relative;
+    line-height: 1.7;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      /* Subtle celestial depth — moonlight washes */
+      radial-gradient(ellipse at 20% 10%, rgba(216, 227, 240, 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 30%, rgba(168, 166, 199, 0.04) 0%, transparent 40%),
+      radial-gradient(ellipse at 50% 90%, rgba(216, 227, 240, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* Enhanced Typography */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'EB Garamond', serif;
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+  }
+
+
+}
+
+@layer components {
+  /* Enhanced journal lines with margin */
+  .journal-lines {
+    background-image: 
+      /* Left margin line */
+      linear-gradient(to right, transparent 0, transparent 3rem, rgba(139, 115, 85, 0.2) 3rem, rgba(139, 115, 85, 0.2) 3.1rem, transparent 3.1rem),
+      /* Horizontal ruling lines */
+      repeating-linear-gradient(
+        transparent,
+        transparent 1.7rem,
+        rgba(139, 115, 85, 0.1) 1.7rem,
+        rgba(139, 115, 85, 0.1) 1.8rem
+      );
+    padding-left: 4rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    min-height: 20rem;
+  }
+
+  /* Diary-style ruled lines for content - Stardust lines */
+  .diary-ruled-lines {
+    background-image: 
+      /* Left margin line - muted-stardust */
+      linear-gradient(to right, transparent 0, transparent 3rem, rgba(168, 166, 199, 0.35) 3rem, rgba(168, 166, 199, 0.35) 3.15rem, transparent 3.15rem),
+      /* Horizontal ruling lines - stardust */
+      repeating-linear-gradient(
+        transparent,
+        transparent 2.4rem,
+        rgba(168, 166, 199, 0.3) 2.4rem,
+        rgba(168, 166, 199, 0.3) 2.45rem
+      );
+    padding-left: 4rem;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+    padding-right: 2rem;
+    min-height: 25rem;
+    position: relative;
+    background-color: rgba(247, 240, 230, 0.5);
+  }
+
+  /* Add hole punches on the left side - more visible */
+  .diary-ruled-lines::before {
+    /* content: ''; */
+    position: absolute;
+    left: 1.5rem;
+    top: 3rem;
+  }
+
+  /* Add subtle celestial watermark (moon crescent) */
+  .diary-ruled-lines::after {
+    content: '';
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+    width: 3rem;
+    height: 3rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 10 C30 20, 20 40, 50 50 C80 40, 70 20, 50 10 Z M50 50 C60 70, 40 80, 50 90 C60 80, 40 70, 50 50 Z M50 50 C20 60, 10 40, 20 50 C10 60, 30 70, 50 50 Z M50 50 C80 40, 90 60, 80 50 C90 40, 70 30, 50 50 Z' fill='none' stroke='%23A8A6C7' stroke-width='1' opacity='0.3'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.15;
+  }
+  
+  .handwritten {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.8;
+    letter-spacing: 0.02em;
+  }
+
+  .paper-texture {
+    position: relative;
+    background: 
+      /* Paper base with subtle gradient */
+      linear-gradient(135deg, #FDF8F2 0%, #F9F1E6 100%),
+      /* Vintage paper stains */
+      radial-gradient(circle at 85% 15%, rgba(210, 180, 140, 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 20% 80%, rgba(160, 140, 120, 0.02) 0%, transparent 40%);
+    box-shadow: 
+      /* Soft paper shadow */
+      0 2px 10px rgba(0, 0, 0, 0.05),
+      /* Inner shadow for depth */
+      inset 0 1px 3px rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(139, 115, 85, 0.1);
+  }
+
+  .paper-texture::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      /* Fine paper grain */
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill='%23000' opacity='0.02'%3E%3Ccircle cx='20' cy='20' r='1'/%3E%3Ccircle cx='80' cy='80' r='0.5'/%3E%3Ccircle cx='40' cy='70' r='0.8'/%3E%3Ccircle cx='90' cy='30' r='0.6'/%3E%3Ccircle cx='10' cy='90' r='0.4'/%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  /* Vintage decorative elements */
+  .ornamental-divider {
+    position: relative;
+    text-align: center;
+    margin: 2rem 0;
+  }
+
+  .ornamental-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(168, 166, 199, 0.3), transparent);
+  }
+
+  .ornamental-divider::after {
+    content: '☽';
+    background: transparent;
+    padding: 0 1rem;
+    color: rgba(168, 166, 199, 0.5);
+    font-size: 1.2rem;
+  }
+
+  /* Ink blot decorations */
+  .ink-blot {
+    position: absolute;
+    width: 0.8rem;
+    height: 0.8rem;
+    background: radial-gradient(circle, rgba(44, 62, 80, 0.1) 0%, transparent 70%);
+    border-radius: 50% 40% 60% 30%;
+    transform: rotate(45deg);
+  }
+
+  .ink-blot::before {
+    content: '';
+    position: absolute;
+    top: -0.2rem;
+    left: 0.3rem;
+    width: 0.3rem;
+    height: 0.3rem;
+    background: rgba(44, 62, 80, 0.08);
+    border-radius: 50%;
+  }
+
+  /* Enhanced card styling — Lunara moon-paper */
+  .vintage-card {
+    background: linear-gradient(135deg, #F7F0E6 0%, #F4EDE0 100%);
+    border: 1px solid rgba(168, 166, 199, 0.18);
+    box-shadow: 
+      0 4px 12px rgba(0, 0, 0, 0.06),
+      0 1px 3px rgba(0, 0, 0, 0.04),
+      inset 0 1px 0 rgba(216, 227, 240, 0.12);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vintage-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 20%, rgba(245, 222, 179, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(238, 203, 173, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  /* Typography enhancements */
+  .elegant-heading {
+    position: relative;
+    text-align: center;
+    margin: 2rem 0;
+  }
+
+  .elegant-heading::after {
+    content: '';
+    position: absolute;
+    bottom: -0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3rem;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(139, 115, 85, 0.4), transparent);
+  }
+
+  /* Improved button styling — Lunara primary CTA */
+  .vintage-button,
+  .lunara-button {
+    background: linear-gradient(135deg, #121A2E 0%, #0B1020 100%);
+    border: 1px solid rgba(216, 227, 240, 0.12);
+    box-shadow: 
+      0 2px 4px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(216, 227, 240, 0.08);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vintage-button::before,
+  .lunara-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(232, 237, 247, 0.08), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .vintage-button:hover::before,
+  .lunara-button:hover::before {
+    left: 100%;
+  }
+
+  .vintage-button:hover,
+  .lunara-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 
+      0 4px 8px rgba(0, 0, 0, 0.2),
+      0 0 20px rgba(253, 230, 138, 0.08),
+      inset 0 1px 0 rgba(216, 227, 240, 0.1);
+  }
+
+  /* Diary page — writing surface */
+  .diary-page {
+    background: linear-gradient(135deg, #F7F0E6 0%, #F4EDE0 100%);
+    border: 1px solid rgba(168, 166, 199, 0.2);
+    box-shadow:
+      0 4px 16px rgba(0, 0, 0, 0.06),
+      0 1px 4px rgba(0, 0, 0, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    border-radius: 0.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Subtle page edge shadow on the right */
+  .diary-page::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 6px;
+    background: linear-gradient(to left, rgba(139, 115, 85, 0.08), transparent);
+    pointer-events: none;
+  }
+
+  /* Page corner fold hint */
+  .diary-page-corner {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, transparent 50%, rgba(139, 115, 85, 0.06) 50%);
+    pointer-events: none;
+  }
+
+  /* Journal side note card */
+  .journal-side-note {
+    background: linear-gradient(160deg, #FDF8F2 0%, #F7EEE0 100%);
+    border: 1px solid rgba(139, 115, 85, 0.12);
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    border-radius: 0.5rem;
+    position: relative;
+  }
+
+  /* Stationery toolbar */
+  .stationery-toolbar {
+    background: linear-gradient(135deg, #FDF8F2 0%, #F9F1E6 100%);
+    border: 1px solid rgba(139, 115, 85, 0.1);
+    border-radius: 0.375rem;
+  }
+
+  .stationery-toolbar button {
+    color: rgba(139, 115, 85, 0.7);
+    transition: all 0.2s ease;
+  }
+
+  .stationery-toolbar button:hover {
+    color: #8B7355;
+    background: rgba(139, 115, 85, 0.06);
+  }
+
+  /* Journal index rail — deep navy gradient */
+  .journal-rail {
+    background: 
+      linear-gradient(180deg, rgba(18, 26, 46, 0.98) 0%, rgba(11, 16, 32, 1) 100%);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+
+  .journal-rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* ==============================
+     DIARY BOOK — Open Book Illusion
+     ============================== */
+
+  .diary-book-perspective {
+    perspective: 1800px;
+    perspective-origin: 50% 50%;
+  }
+
+  /* Book container — holds the spread + page stack */
+  .diary-book {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    max-width: 1100px;
+    margin: 0 auto;
+    min-height: 72vh;
+  }
+
+  /* Page stack — layered edges behind the main pages */
+  .diary-book-stack {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .diary-book-stack::before,
+  .diary-book-stack::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border-radius: 0.5rem 0 0 0.5rem;
+    border: 1px solid rgba(139, 115, 85, 0.08);
+    background: linear-gradient(135deg, #FDF8F2 0%, #F9F1E6 100%);
+  }
+
+  .diary-book-stack::before {
+    inset: 6px;
+    transform: translate(-2px, -1px);
+    opacity: 0.6;
+  }
+
+  .diary-book-stack::after {
+    inset: 8px;
+    transform: translate(-4px, -2px);
+    opacity: 0.3;
+  }
+
+  /* The open spread — two pages side by side */
+  .diary-spread {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    width: 100%;
+    gap: 0;
+    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.08))
+            drop-shadow(0 2px 8px rgba(0, 0, 0, 0.04));
+  }
+
+  /* Individual page base */
+  .diary-page-surface {
+    background: linear-gradient(135deg, #FDF8F2 0%, #F9F1E6 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Left page — slightly angled inward */
+  .diary-page-left {
+    flex: 1;
+    border-radius: 0.5rem 0 0 0.5rem;
+    border: 1px solid rgba(139, 115, 85, 0.12);
+    border-right: none;
+    transform: rotateY(1.5deg);
+    transform-origin: right center;
+    box-shadow:
+      inset -8px 0 16px -8px rgba(0, 0, 0, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  /* Right page — slightly angled inward */
+  .diary-page-right {
+    flex: 1.1;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0 0.5rem 0.5rem 0;
+    border: 1px solid rgba(139, 115, 85, 0.12);
+    border-left: 1px solid rgba(139, 115, 85, 0.06);
+    transform: rotateY(-1.5deg);
+    transform-origin: left center;
+    box-shadow:
+      inset 8px 0 16px -8px rgba(0, 0, 0, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  /* Spine / gutter — center shadow — silver-blue */
+  .diary-spine {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 24px;
+    transform: translateX(-50%);
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .diary-spine::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      rgba(168, 166, 199, 0.06) 0%,
+      rgba(168, 166, 199, 0.12) 40%,
+      rgba(168, 166, 199, 0.06) 50%,
+      rgba(168, 166, 199, 0.12) 60%,
+      rgba(168, 166, 199, 0.06) 100%
+    );
+  }
+
+  .diary-spine::after {
+    content: '';
+    position: absolute;
+    top: 8%;
+    bottom: 8%;
+    left: 50%;
+    width: 1px;
+    transform: translateX(-50%);
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(168, 166, 199, 0.15),
+      transparent
+    );
+  }
+
+  /* Page corner curl hint — moonlight page curl */
+  .diary-page-curl {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 28px;
+    height: 28px;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .diary-page-curl::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0 28px 28px;
+    border-color: transparent transparent rgba(168, 166, 199, 0.08) transparent;
+  }
+
+  .diary-page-curl::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, transparent 50%, rgba(247, 240, 230, 0.9) 50%);
+    box-shadow: -2px -2px 4px rgba(0, 0, 0, 0.03);
+  }
+
+  /* Writing surface — flex column container for right page content */
+  .diary-writing-surface {
+    min-height: 60vh;
+    padding: clamp(1.5rem, 2.5vw, 2.5rem);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* Date zone — top right of right page */
+  .diary-page-date {
+    text-align: right;
+    margin-bottom: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  /* Title zone — dedicated area with bottom border only */
+  .diary-title-zone {
+    flex-shrink: 0;
+    margin-bottom: 0.75rem;
+  }
+
+  .diary-title-input {
+    width: 100%;
+    font-family: 'EB Garamond', serif;
+    font-size: clamp(2rem, 3vw, 3.2rem);
+    font-weight: 500;
+    color: #2C3E50;
+    opacity: 1;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid rgba(139, 115, 85, 0.15);
+    border-radius: 0;
+    padding: 0 0 0.5rem 0;
+    outline: none;
+    line-height: 1.3;
+  }
+
+  .diary-title-input::placeholder {
+    color: rgba(139, 115, 85, 0.42);
+    font-style: italic;
+  }
+
+  .diary-title-input:focus {
+    border-bottom-color: rgba(139, 115, 85, 0.35);
+  }
+
+  /* Toolbar zone — sits between title and body */
+  .diary-toolbar-zone {
+    flex-shrink: 0;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(139, 115, 85, 0.06);
+    color: rgba(139, 115, 85, 0.82);
+  }
+
+  /* Page body — ruled writing area only */
+  .diary-page-body {
+    --diary-line-height: 2.35rem;
+    --diary-text-top-offset: 0.28rem;
+    --diary-margin-line-x: 3rem;
+    flex: 1;
+    position: relative;
+    min-height: clamp(460px, 54vh, 660px);
+    overflow: hidden;
+    background-image:
+      /* Left margin line */
+      linear-gradient(
+        to right,
+        transparent 0,
+        transparent var(--diary-margin-line-x),
+        rgba(139, 115, 85, 0.34) var(--diary-margin-line-x),
+        rgba(139, 115, 85, 0.34) calc(var(--diary-margin-line-x) + 1px),
+        transparent calc(var(--diary-margin-line-x) + 1px)
+      ),
+      /* Horizontal ruling lines */
+      repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent calc(var(--diary-line-height) - 1px),
+        rgba(139, 115, 85, 0.26) calc(var(--diary-line-height) - 1px),
+        rgba(139, 115, 85, 0.26) var(--diary-line-height)
+      );
+    background-position:
+      0 0,
+      0 var(--diary-text-top-offset);
+    background-size:
+      100% 100%,
+      100% var(--diary-line-height);
+  }
+
+  /* Hidden measurement div — mirrors textarea for visual overflow detection */
+  .diary-page-measure {
+    position: absolute;
+    visibility: hidden;
+    pointer-events: none;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    word-break: normal;
+    box-sizing: border-box;
+    width: 100%;
+    font-family: 'EB Garamond', serif;
+    font-size: clamp(1.15rem, 1.3vw, 1.32rem);
+    line-height: var(--diary-line-height);
+    padding:
+      var(--diary-text-top-offset)
+      1.25rem
+      1.5rem
+      calc(var(--diary-margin-line-x) + 0.7rem);
+    color: #2C3E50;
+    letter-spacing: normal;
+  }
+
+  /* Writing textarea — fills body, no scrolling, respects page boundary */
+  .diary-writing-textarea {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    font-family: 'EB Garamond', serif;
+    font-size: clamp(1.15rem, 1.3vw, 1.32rem);
+    line-height: var(--diary-line-height);
+    color: #2C3E50;
+    caret-color: #2C3E50;
+    background: transparent;
+    border: 0;
+    outline: 0;
+    resize: none;
+    overflow: hidden;
+    padding:
+      var(--diary-text-top-offset)
+      1.25rem
+      1.5rem
+      calc(var(--diary-margin-line-x) + 0.7rem);
+    position: relative;
+    z-index: 1;
+  }
+
+  .diary-writing-textarea::placeholder {
+    color: rgba(139, 115, 85, 0.55);
+    font-style: italic;
+  }
+
+  /* Footer zone — page number, actions */
+  .diary-page-footer {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.75rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(139, 115, 85, 0.06);
+  }
+
+  /* ==============================
+     BOOKMARK STRIP — Right Edge
+     ============================== */
+
+  .diary-bookmark-strip {
+    position: absolute;
+    top: 2rem;
+    right: -1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    z-index: 15;
+  }
+
+  .diary-bookmark-tab {
+    width: 1.35rem;
+    height: 1.6rem;
+    background: linear-gradient(135deg, #FDF8F2 0%, #F9F1E6 100%);
+    border: 1px solid rgba(139, 115, 85, 0.18);
+    border-left: none;
+    border-radius: 0 0.25rem 0.25rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'EB Garamond', serif;
+    font-size: 0.6rem;
+    color: rgba(139, 115, 85, 0.6);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
+  .diary-bookmark-tab:hover {
+    background: linear-gradient(135deg, #F9F1E6 0%, #F4E4BC 100%);
+    color: #8B7355;
+    transform: translateX(2px);
+  }
+
+  .diary-bookmark-tab.active {
+    background: linear-gradient(135deg, rgba(44, 62, 80, 0.1) 0%, rgba(44, 62, 80, 0.05) 100%);
+    color: #2C3E50;
+    border-color: rgba(44, 62, 80, 0.25);
+    transform: translateX(4px);
+  }
+
+  /* ==============================
+     PREVIEW MODE
+     ============================== */
+
+  .diary-page-preview {
+    font-family: 'EB Garamond', serif;
+    font-size: clamp(1.15rem, 1.3vw, 1.32rem);
+    line-height: var(--diary-line-height);
+    color: #2C3E50;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    padding-top: var(--diary-text-top-offset);
+    padding-left: calc(var(--diary-margin-line-x) + 0.7rem);
+  }
+
+  .diary-page-preview h1 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 1rem 0 0.5rem 0;
+    line-height: 1.3;
+  }
+
+  .diary-page-preview h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 0.75rem 0 0.5rem 0;
+    line-height: 1.3;
+  }
+
+  .diary-page-preview h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 0.5rem 0 0.25rem 0;
+    line-height: 1.3;
+  }
+
+  .diary-page-preview blockquote {
+    border-left: 2px solid rgba(139, 115, 85, 0.3);
+    padding-left: 1rem;
+    margin: 0.5rem 0;
+    color: rgba(44, 62, 80, 0.8);
+    font-style: italic;
+  }
+
+  .diary-page-preview hr {
+    border: none;
+    border-top: 1px solid rgba(139, 115, 85, 0.2);
+    margin: 1rem 0;
+  }
+
+  .diary-page-preview strong {
+    font-weight: 600;
+  }
+
+  .diary-page-preview em {
+    font-style: italic;
+  }
+
+  /* Previous page content — faded preview on left page */
+  .diary-page-previous-content {
+    font-family: 'EB Garamond', serif;
+    font-size: 0.9rem;
+    line-height: 2rem;
+    color: rgba(44, 62, 80, 0.3);
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    font-style: italic;
+  }
+
+  .diary-page-previous-content h1 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin: 0.5rem 0 0.25rem 0;
+    line-height: 1.3;
+    font-style: normal;
+  }
+
+  .diary-page-previous-content h2 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 0.4rem 0 0.2rem 0;
+    line-height: 1.3;
+    font-style: normal;
+  }
+
+  .diary-page-previous-content h3 {
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0.3rem 0 0.15rem 0;
+    line-height: 1.3;
+    font-style: normal;
+  }
+
+  .diary-page-previous-content blockquote {
+    border-left: 1px solid rgba(44, 62, 80, 0.15);
+    padding-left: 0.5rem;
+    margin: 0.25rem 0;
+  }
+
+  .diary-page-previous-content hr {
+    border: none;
+    border-top: 1px solid rgba(44, 62, 80, 0.1);
+    margin: 0.5rem 0;
+  }
+
+  .diary-page-previous-content strong {
+    font-weight: 600;
+  }
+
+  .diary-page-previous-content em {
+    font-style: italic;
+  }
+
+  /* ==============================
+     PAGE TURN ANIMATION
+     ============================== */
+
+  .page-turn-forward-exit {
+    animation: pageTurnForwardOut 700ms ease-in forwards;
+  }
+
+  .page-turn-forward-enter {
+    animation: pageTurnForwardIn 700ms ease-out forwards;
+  }
+
+  .page-turn-backward-exit {
+    animation: pageTurnBackwardOut 700ms ease-in forwards;
+  }
+
+  .page-turn-backward-enter {
+    animation: pageTurnBackwardIn 700ms ease-out forwards;
+  }
+
+  @keyframes pageTurnForwardOut {
+    0% {
+      opacity: 1;
+      transform: perspective(1800px) rotateY(0deg);
+      transform-origin: left center;
+    }
+    100% {
+      opacity: 0;
+      transform: perspective(1800px) rotateY(-12deg);
+      transform-origin: left center;
+    }
+  }
+
+  @keyframes pageTurnForwardIn {
+    0% {
+      opacity: 0;
+      transform: perspective(1800px) rotateY(12deg);
+      transform-origin: right center;
+    }
+    100% {
+      opacity: 1;
+      transform: perspective(1800px) rotateY(0deg);
+      transform-origin: right center;
+    }
+  }
+
+  @keyframes pageTurnBackwardOut {
+    0% {
+      opacity: 1;
+      transform: perspective(1800px) rotateY(0deg);
+      transform-origin: right center;
+    }
+    100% {
+      opacity: 0;
+      transform: perspective(1800px) rotateY(12deg);
+      transform-origin: right center;
+    }
+  }
+
+  @keyframes pageTurnBackwardIn {
+    0% {
+      opacity: 0;
+      transform: perspective(1800px) rotateY(-12deg);
+      transform-origin: left center;
+    }
+    100% {
+      opacity: 1;
+      transform: perspective(1800px) rotateY(0deg);
+      transform-origin: left center;
+    }
+  }
+
+  /* Book opening animation */
+  .diary-book-open {
+    animation: diaryBookOpen 800ms ease-out forwards;
+  }
+
+  @keyframes diaryBookOpen {
+    0% {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Write/Preview tab switch — page turn */
+  .diary-tab-turn-exit {
+    animation: diaryTabTurnOut 600ms ease-in forwards;
+  }
+
+  .diary-tab-turn-enter {
+    animation: diaryTabTurnIn 600ms ease-out forwards;
+  }
+
+  @keyframes diaryTabTurnOut {
+    0% {
+      opacity: 1;
+      transform: perspective(1800px) rotateY(0deg);
+    }
+    100% {
+      opacity: 0;
+      transform: perspective(1800px) rotateY(-8deg);
+    }
+  }
+
+  @keyframes diaryTabTurnIn {
+    0% {
+      opacity: 0;
+      transform: perspective(1800px) rotateY(8deg);
+    }
+    100% {
+      opacity: 1;
+      transform: perspective(1800px) rotateY(0deg);
+    }
+  }
+
+  /* Page full prompt */
+  .diary-page-full-prompt {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, rgba(253, 248, 242, 0.95) 0%, rgba(249, 241, 230, 0.95) 100%);
+    border: 1px solid rgba(139, 115, 85, 0.15);
+    border-radius: 0.5rem;
+    padding: 0.5rem 1.25rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    font-family: 'EB Garamond', serif;
+    font-size: 0.85rem;
+    color: #8B7355;
+    font-style: italic;
+    white-space: nowrap;
+    z-index: 20;
+    animation: promptFadeIn 0.5s ease-out;
+  }
+
+  @keyframes promptFadeIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(8px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
+
+  /* Side notes — paper slip style */
+  .diary-side-slip {
+    background: linear-gradient(160deg, #FDF8F2 0%, #F7EEE0 100%);
+    border: 1px solid rgba(139, 115, 85, 0.1);
+    border-radius: 0.375rem;
+    box-shadow:
+      0 1px 4px rgba(0, 0, 0, 0.03),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    position: relative;
+  }
+
+  .diary-side-slip::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(139, 115, 85, 0.15), transparent);
+    border-radius: 0.375rem 0 0 0.375rem;
+  }
+
+  /* Image upload slip — theme-aligned card */
+  .diary-image-slip {
+    border: 1px solid rgba(139, 115, 85, 0.22);
+    background: rgba(253, 248, 242, 0.72);
+    border-radius: 0.65rem;
+    padding: 1rem;
+    color: #2C3E50;
+    box-shadow: 0 4px 10px rgba(44, 62, 80, 0.06);
+  }
+
+  .diary-image-slip-title {
+    font-family: 'EB Garamond', serif;
+    font-size: 1rem;
+    color: #2C3E50;
+  }
+
+  .diary-image-slip p {
+    color: rgba(139, 115, 85, 0.82);
+    font-size: 0.9rem;
+  }
+
+  .diary-image-button {
+    border: 1px solid rgba(139, 115, 85, 0.32);
+    background: rgba(253, 248, 242, 0.9);
+    color: #2C3E50;
+    border-radius: 999px;
+    padding: 0.5rem 0.9rem;
+    cursor: pointer;
+    font-family: 'EB Garamond', serif;
+    font-size: 0.9rem;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .diary-image-button:hover {
+    background: rgba(244, 228, 188, 0.65);
+    box-shadow: 0 2px 6px rgba(44, 62, 80, 0.08);
+  }
+
+  /* Reduced motion — disable page turn */
+  @media (prefers-reduced-motion: reduce) {
+    .page-turn-forward-exit,
+    .page-turn-forward-enter,
+    .page-turn-backward-exit,
+    .page-turn-backward-enter,
+    .diary-tab-turn-exit,
+    .diary-tab-turn-enter,
+    .diary-book-open {
+      animation: none !important;
+    }
+
+    .page-turn-forward-exit,
+    .page-turn-backward-exit,
+    .diary-tab-turn-exit {
+      opacity: 0;
+    }
+
+    .page-turn-forward-enter,
+    .page-turn-backward-enter,
+    .diary-tab-turn-enter,
+    .diary-book-open {
+      opacity: 1;
+    }
+  }
+
+  /* ==============================
+     TEXT SELECTION — Explicit enable
+     ============================== */
+
+  .diary-writing-textarea,
+  .diary-title-input,
+  .diary-page-preview,
+  .diary-page-previous-content,
+  .diary-page-body textarea,
+  .diary-page-body [contenteditable="true"],
+  .diary-side-slip textarea,
+  .diary-side-slip input {
+    user-select: text;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+  }
+
+  /* Decorative elements — non-interactive */
+  .diary-book-decoration,
+  .diary-spine,
+  .diary-page-curl,
+  .diary-book-stack,
+  .diary-book-stack::before,
+  .diary-book-stack::after,
+  .diary-page-measure {
+    pointer-events: none;
+  }
+
+  /* ==============================
+     PAGE CLICK NAVIGATION — Cursor Hints
+     ============================== */
+
+  .diary-page-left {
+    cursor: w-resize;
+  }
+
+  .diary-page-right {
+    cursor: e-resize;
+  }
+
+  /* Class-based fallback for browsers without :has() */
+  .diary-page-focused {
+    cursor: text;
+  }
+
+  /* Enhanced :has() for browsers that support it */
+  @supports selector(:has(*)) {
+    .diary-page-left:has(textarea:focus),
+    .diary-page-left:has(input:focus) {
+      cursor: text;
+    }
+
+    .diary-page-right:has(textarea:focus),
+    .diary-page-right:has(input:focus) {
+      cursor: text;
+    }
+  }
+
+  /* ==============================
+     BOTTOM NAVIGATION
+     ============================== */
+
+  .diary-bottom-navigation {
+    position: relative;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    margin-top: 1rem;
+    font-family: 'EB Garamond', serif;
+  }
+
+  .diary-page-arrow {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 999px;
+    border: 1px solid rgba(139, 115, 85, 0.35);
+    background: rgba(253, 248, 242, 0.88);
+    color: #2C3E50;
+    opacity: 0.9;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(44, 62, 80, 0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease, background 0.25s ease;
+    user-select: none;
+    font-family: 'EB Garamond', serif;
+    font-size: 1.05rem;
+  }
+
+  .diary-page-arrow:hover:not(:disabled) {
+    transform: translateY(-1px);
+    background: rgba(244, 228, 188, 0.65);
+    box-shadow: 0 4px 12px rgba(44, 62, 80, 0.12);
+  }
+
+  .diary-page-arrow:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  .diary-page-arrow:focus-visible {
+    outline: 2px solid rgba(253, 230, 138, 0.4);
+    outline-offset: 2px;
+  }
+
+  .diary-page-count {
+    font-style: italic;
+    color: rgba(168, 166, 199, 0.85);
+    user-select: none;
+    font-size: 0.95rem;
+  }
+
+  .diary-page-count-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.375rem;
+  }
+
+  .diary-page-dots {
+    display: flex;
+    gap: 0.375rem;
+    align-items: center;
+  }
+
+  .diary-page-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+    border: 1px solid rgba(168, 166, 199, 0.5);
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+
+  .diary-page-dot:hover {
+    background: rgba(168, 166, 199, 0.4);
+  }
+
+  .diary-page-dot.active {
+    background: rgba(18, 26, 46, 0.6);
+    border-color: rgba(18, 26, 46, 0.8);
+  }
+
+  .diary-page-dot:focus-visible {
+    outline: 2px solid rgba(253, 230, 138, 0.4);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .diary-page-arrow {
+      transition: opacity 0.15s ease;
+    }
+  }
+
+  /* Mobile: single page, no spread */
+  @media (max-width: 1023px) {
+    .diary-spread {
+      flex-direction: column;
+    }
+
+    .diary-page-left {
+      display: none;
+    }
+
+    .diary-page-right {
+      border-radius: 0.5rem;
+      border: 1px solid rgba(168, 166, 199, 0.15);
+      transform: none;
+    }
+
+    .diary-spine {
+      display: none;
+    }
+
+    .diary-book-stack::before,
+    .diary-book-stack::after {
+      display: none;
+    }
+
+    .diary-writing-surface {
+      min-height: 50vh;
+      padding: clamp(1.25rem, 2vw, 2rem) 1.25rem;
+    }
+
+    .diary-title-input {
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+    }
+
+    .diary-page-body {
+      --diary-line-height: 2.1rem;
+      --diary-text-top-offset: 0.5rem;
+      --diary-margin-line-x: 2.3rem;
+    }
+
+    .diary-bookmark-strip {
+      display: none;
+    }
+
+    .diary-writing-textarea {
+      font-size: 1rem;
+      line-height: var(--diary-line-height);
+      padding: var(--diary-text-top-offset) 1rem 1.25rem calc(var(--diary-margin-line-x) + 0.7rem);
+    }
+
+    .diary-page-measure {
+      font-size: 1rem;
+      line-height: var(--diary-line-height);
+      padding: var(--diary-text-top-offset) 1rem 1.25rem calc(var(--diary-margin-line-x) + 0.7rem);
+    }
+
+    .diary-page-bottom-navigation {
+      padding-bottom: env(safe-area-inset-bottom, 0);
+      margin-bottom: env(safe-area-inset-bottom, 0);
+    }
+
+    .diary-page-dots {
+      gap: 0.3rem;
+    }
+
+    .diary-page-dot {
+      width: 0.4rem;
+      height: 0.4rem;
+    }
+  }
+
+  /* ==============================
+     DIARY TAB BOOKMARKS
+     ============================== */
+
+  .diary-tab-bookmark-strip {
+    display: inline-flex;
+    gap: 2px;
+    position: relative;
+    z-index: 5;
+    margin-top: -0.75rem;
+  }
+
+  .diary-tab-bookmark {
+    font-family: 'EB Garamond', serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: rgba(139, 115, 85, 0.6);
+    background: linear-gradient(180deg, rgba(253, 248, 242, 0.8) 0%, rgba(245, 236, 223, 0.6) 100%);
+    border: 1px solid rgba(139, 115, 85, 0.12);
+    border-bottom: none;
+    border-radius: 0.5rem 0.5rem 0 0;
+    padding: 0.4rem 1.25rem 0.55rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    top: 2px;
+    box-shadow: 0 -1px 4px rgba(44, 62, 80, 0.03);
+  }
+
+  .diary-tab-bookmark:hover {
+    color: #2C3E50;
+    background: linear-gradient(180deg, rgba(253, 248, 242, 1) 0%, rgba(245, 236, 223, 0.85) 100%);
+  }
+
+  .diary-tab-bookmark-active {
+    color: #2C3E50;
+    background: linear-gradient(180deg, rgba(253, 248, 242, 1) 0%, rgba(253, 248, 242, 1) 100%);
+    border-color: rgba(139, 115, 85, 0.18);
+    box-shadow: 0 -2px 8px rgba(44, 62, 80, 0.06);
+    top: 0;
+    padding-bottom: 0.65rem;
+  }
+
+  .diary-tab-bookmark-active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #FDF8F2;
+  }
+
+  /* ==============================
+     COVER-TO-BOOK TRANSITION
+     ============================== */
+
+  .diary-transition-fade-in {
+    animation: diaryFadeIn 0.6s ease-out forwards;
+  }
+
+  @keyframes diaryFadeIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.97) translateY(8px);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .diary-transition-fade-in {
+      animation: none;
+      opacity: 1;
+    }
+  }
+
+  /* ==============================
+     DIARY COVER START SCREEN
+     ============================== */
+
+  .diary-cover-fade {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
+
+  .diary-cover-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .diary-cover-opening {
+    animation: diaryCoverOpen 0.8s ease-in forwards;
+  }
+
+  @keyframes diaryCoverOpen {
+    0% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    40% {
+      opacity: 1;
+      transform: scale(1.01);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1.03);
+    }
+  }
+
+  .diary-cover-shell {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    background: linear-gradient(145deg, #FDF8F2 0%, #F5ECDF 40%, #F9F1E6 100%);
+    border: 1px solid rgba(139, 115, 85, 0.2);
+    border-radius: 0.75rem;
+    box-shadow:
+      0 8px 32px rgba(44, 62, 80, 0.08),
+      0 2px 8px rgba(44, 62, 80, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5),
+      inset 0 -1px 0 rgba(139, 115, 85, 0.05);
+    overflow: hidden;
+    padding: 2.5rem 2rem;
+  }
+
+  .diary-cover-florals {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .diary-cover-floral {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    opacity: 0.8;
+    animation: constellationPulse 8s ease-in-out infinite;
+  }
+
+  .diary-cover-floral-tl { top: 8px; left: 8px; animation-delay: 0s; }
+  .diary-cover-floral-tr { top: 8px; right: 8px; animation-delay: 2s; transform: scaleX(-1); }
+  .diary-cover-floral-bl { bottom: 8px; left: 8px; animation-delay: 4s; }
+  .diary-cover-floral-br { bottom: 8px; right: 8px; animation-delay: 6s; transform: scaleX(-1); }
+
+  @keyframes constellationPulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 0.9; }
+  }
+
+  .diary-cover-glow {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(168, 166, 199, 0.12) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    animation: moonGlow 6s ease-in-out infinite;
+  }
+
+  @keyframes moonGlow {
+    0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+    50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+  }
+
+  .diary-cover-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .diary-cover-brand {
+    margin-bottom: 1.25rem;
+  }
+
+  .diary-cover-title {
+    font-family: 'EB Garamond', serif;
+    font-size: clamp(2.2rem, 5vw, 3rem);
+    font-weight: 500;
+    color: #2C3E50;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  .diary-cover-subtitle {
+    font-family: 'EB Garamond', serif;
+    font-size: 0.95rem;
+    color: rgba(139, 115, 85, 0.7);
+    font-style: italic;
+    margin-top: 0.35rem;
+  }
+
+  .diary-cover-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 1rem 0;
+  }
+
+  .diary-cover-ornament {
+    color: rgba(168, 166, 199, 0.5);
+    font-size: 1.1rem;
+  }
+
+  .diary-cover-tagline {
+    font-family: 'EB Garamond', serif;
+    font-size: 0.85rem;
+    color: rgba(139, 115, 85, 0.55);
+    font-style: italic;
+    margin-bottom: 1.75rem;
+  }
+
+  .diary-cover-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .diary-cover-field {
+    text-align: left;
+  }
+
+  .diary-cover-label {
+    display: block;
+    font-family: 'EB Garamond', serif;
+    font-size: 0.9rem;
+    color: #2C3E50;
+    margin-bottom: 0.4rem;
+    font-weight: 500;
+  }
+
+  .diary-cover-optional {
+    font-weight: 400;
+    color: rgba(139, 115, 85, 0.5);
+    font-style: italic;
+    margin-left: 0.35rem;
+    font-size: 0.8rem;
+  }
+
+  .diary-cover-input {
+    width: 100%;
+    font-family: 'EB Garamond', serif;
+    font-size: 1.05rem;
+    color: #2C3E50;
+    background: rgba(253, 248, 242, 0.6);
+    border: 1px solid rgba(139, 115, 85, 0.2);
+    border-radius: 0.5rem;
+    padding: 0.65rem 0.85rem;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+  }
+
+  .diary-cover-input::placeholder {
+    color: rgba(139, 115, 85, 0.4);
+    font-style: italic;
+  }
+
+  .diary-cover-input:focus {
+    border-color: rgba(44, 62, 80, 0.3);
+    box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.06);
+  }
+
+  .diary-cover-textarea {
+    width: 100%;
+    font-family: 'EB Garamond', serif;
+    font-size: 0.95rem;
+    color: #2C3E50;
+    background: rgba(253, 248, 242, 0.6);
+    border: 1px solid rgba(139, 115, 85, 0.2);
+    border-radius: 0.5rem;
+    padding: 0.65rem 0.85rem;
+    outline: none;
+    resize: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+    line-height: 1.5;
+  }
+
+  .diary-cover-textarea::placeholder {
+    color: rgba(139, 115, 85, 0.4);
+    font-style: italic;
+  }
+
+  .diary-cover-textarea:focus {
+    border-color: rgba(44, 62, 80, 0.3);
+    box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.06);
+  }
+
+  .diary-cover-error {
+    font-family: 'EB Garamond', serif;
+    font-size: 0.8rem;
+    color: rgba(139, 115, 85, 0.8);
+    font-style: italic;
+    margin-top: 0.35rem;
+  }
+
+  .diary-cover-button {
+    width: 100%;
+    font-family: 'EB Garamond', serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: #E8EDF7;
+    background: linear-gradient(135deg, #121A2E 0%, #0B1020 100%);
+    border: 1px solid rgba(216, 227, 240, 0.12);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    box-shadow:
+      0 2px 8px rgba(11, 16, 32, 0.2),
+      inset 0 1px 0 rgba(216, 227, 240, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .diary-cover-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(232, 237, 247, 0.08), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .diary-cover-button:hover:not(:disabled)::before {
+    left: 100%;
+  }
+
+  .diary-cover-button:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow:
+      0 4px 12px rgba(11, 16, 32, 0.3),
+      0 0 20px rgba(253, 230, 138, 0.08),
+      inset 0 1px 0 rgba(216, 227, 240, 0.1);
+  }
+
+  .diary-cover-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .diary-cover-button-opening {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .diary-cover-privacy {
+    font-family: 'EB Garamond', serif;
+    font-size: 0.75rem;
+    color: rgba(139, 115, 85, 0.45);
+    font-style: italic;
+    margin-top: 1rem;
+    text-align: center;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .diary-cover-fade {
+      transition: opacity 0.3s ease-out;
+      transform: none;
+    }
+
+    .diary-cover-opening {
+      animation: diaryCoverOpenReduced 0.4s ease-in forwards;
+    }
+
+    @keyframes diaryCoverOpenReduced {
+      0% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    .diary-cover-floral {
+      animation: none;
+    }
+
+    .diary-cover-glow {
+      animation: none;
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 640px) {
+    .diary-cover-shell {
+      max-width: 100%;
+      margin: 0 1rem;
+      padding: 2rem 1.25rem;
+    }
+
+    .diary-cover-title {
+      font-size: 2rem;
+    }
+  }
+}
