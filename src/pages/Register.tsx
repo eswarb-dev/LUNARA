@@ -3,6 +3,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { CheckCircle2 } from 'lucide-react';
 
 export default function Register() {
   const [fullName, setFullName] = useState('');
@@ -74,15 +75,24 @@ export default function Register() {
           <div className="mb-4">
             <span className="text-2xl tracking-[0.4em] font-garamond font-light text-pearl-mist">LUNARA</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-garamond font-medium text-pearl-mist mb-4">Welcome to Lunara!</h2>
+          <div className="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-full border border-moon-gold/35 bg-moon-gold/10 text-moon-gold shadow-[0_0_22px_rgba(230,195,122,0.18)]">
+            <CheckCircle2 className="h-6 w-6" aria-hidden="true" />
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-garamond font-medium text-pearl-mist mb-3">
+            Account created successfully
+          </h2>
+          <p className="text-lunara-silver font-garamond mb-2">
+            Your Lunara account is ready.
+          </p>
           <p className="text-muted-stardust font-garamond mb-6">
-            Account created. Please check your email to confirm your account, then sign in.
+            You can now return to login and enter your journal.
           </p>
           <Button
+            type="button"
             onClick={() => navigate('/login')}
             className="lunara-button font-garamond text-lg py-3 rounded-full"
           >
-            Go to Login
+            Back to Login
           </Button>
         </div>
       </section>

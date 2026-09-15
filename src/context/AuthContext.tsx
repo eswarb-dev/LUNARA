@@ -165,7 +165,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   const register = async (email: string, password: string, fullName: string) => {
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -173,6 +173,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       },
     });
     if (error) throw error;
+
+    if (data.session) {
+      await supabase.auth.signOut();
+      setUser(null);
+      setSession(null);
+    }
   };
 
   const logout = async () => {

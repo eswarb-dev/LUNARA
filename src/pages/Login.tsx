@@ -46,7 +46,7 @@ export default function Login() {
       if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
         userMessage = 'Supabase is not configured. Check .env file.';
       } else if (msg.includes('Email not confirmed')) {
-        userMessage = 'Please confirm your email before logging in.';
+        userMessage = 'This account is not ready to sign in yet. Please try again later.';
       } else if (msg.includes('Invalid login credentials')) {
         userMessage = 'Invalid email or password.';
       } else if (msg.includes('rate limit') || err?.status === 429) {
